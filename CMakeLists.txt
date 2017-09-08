@@ -13,5 +13,9 @@ link_directories(/usr/local/lib)
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
-add_executable(SDL2Test Main.cpp)
-target_link_libraries(openGLTuror ${SDL2_LIBRARIES})
+
+find_package(GLEW REQUIRED)
+include_directories(${GLEW_INCLUDE_DIRS})
+link_libraries(${GLEW_LIBRARIES})
+
+target_link_libraries(openGLTuror ${SDL2_LIBRARIES} ${GLEW_LIBRARIES})
