@@ -46,12 +46,16 @@ void MainGame::initSystems() {
         fatalError("SDL_GLcontext could not been create");
     }
 
-    glewInit();
+    GLenum error = glewInit();
+    if (error != GLEW_OK) {
+       fatalError("Could not initialize glew");
+    }
 }
 
 void MainGame::gameLoop() {
     while (_gameState != GameState::EXIT) {
         processInput();
+        drawGame();
     }
 }
 
@@ -67,4 +71,8 @@ void MainGame::processInput() {
                 break;
         }
     };
+}
+
+void MainGame::drawGame() {
+   glClearDepth(1.0);
 }
