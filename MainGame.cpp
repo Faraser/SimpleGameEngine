@@ -5,10 +5,12 @@ MainGame::MainGame() {
     _window = nullptr;
     _screenWidth = 1024;
     _screenHeight = 768;
+    _gameState = GameState::PLAY;
 }
 
 void MainGame::run() {
     initSystems();
+    gameLoop();
 }
 
 void MainGame::initSystems() {
@@ -28,4 +30,21 @@ void MainGame::initSystems() {
     if (_window == nullptr) {
         std::cout << "Window could not be created! SDL_Error:" << SDL_GetError() << std::endl;
     }
+}
+
+void MainGame::gameLoop() {
+    while (_gameState != GameState::EXIT) {
+        processInput();
+    }
+}
+
+void MainGame::processInput() {
+    SDL_Event evnt;
+    while(SDL_PollEvent(&evnt)) {
+        switch(evnt.type) {
+            case SDL_QUIT:
+                _gameState = GameState::EXIT;
+                break;
+        }
+    };
 }
