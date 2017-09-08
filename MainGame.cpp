@@ -28,7 +28,7 @@ void MainGame::initSystems() {
         fatalError("SDL could not initialize!");
     };
 
-    SDL_Window *_window = SDL_CreateWindow(
+    _window = SDL_CreateWindow(
             "Game engine",
             SDL_WINDOWPOS_CENTERED,
             SDL_WINDOWPOS_CENTERED,
@@ -50,10 +50,10 @@ void MainGame::initSystems() {
     if (error != GLEW_OK) {
         fatalError("Could not initialize glew");
     }
+    glewExperimental = GL_TRUE;
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-//    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-
-    glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 }
 
 void MainGame::gameLoop() {
@@ -71,7 +71,7 @@ void MainGame::processInput() {
                 _gameState = GameState::EXIT;
                 break;
             case SDL_MOUSEMOTION:
-//                std::cout << evnt.motion.x << std::endl;
+                std::cout << evnt.motion.x << std::endl;
                 break;
         }
     };
@@ -79,7 +79,7 @@ void MainGame::processInput() {
 
 void MainGame::drawGame() {
     glClearDepth(1.0);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glEnableClientState(GL_COLOR_ARRAY);
     glBegin(GL_TRIANGLES);
