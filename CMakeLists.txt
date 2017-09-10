@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.8)
-project(openGLTuror)
+project(SimpleGameEngine)
 
 set(CMAKE_CXX_STANDARD 14)
 
 set(SOURCE_FILES main.cpp MainGame.cpp MainGame.h Sprite.cpp Sprite.h GLSLprogram.cpp GLSLprogram.h Errors.cpp Errors.h)
-add_executable(openGLTuror ${SOURCE_FILES})
+add_executable(SimpleGameEngine ${SOURCE_FILES})
 
 include_directories(/usr/local/include)
 
@@ -22,4 +22,4 @@ find_package(glfw3 3.2 REQUIRED)
 find_package(OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR})
 
-target_link_libraries(openGLTuror ${SDL2_LIBRARIES} ${GLEW_LIBRARIES} ${GLFW_LIBRARIES} ${OPENGL_gl_LIBRARY})
+target_link_libraries(SimpleGameEngine ${SDL2_LIBRARIES} ${GLEW_LIBRARIES} ${GLFW_LIBRARIES} ${OPENGL_gl_LIBRARY})
