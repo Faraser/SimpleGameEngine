@@ -19,6 +19,7 @@ void MainGame::run() {
     _sprite.init(-1.0f, -1.0f, 1.5f, 1.5f);
 
     _playerTexture = ImageLoader::loadPNG("textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
+//    _playerTexture = ImageLoader::loadPNG("textures/jimmyJump_pack/PNG/peka.png");
 
     gameLoop();
 }
@@ -85,13 +86,21 @@ void MainGame::drawGame() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     _colorProgram.use();
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, _playerTexture.id);
+
+    // Send texture to shader
+    GLint textureLocation = _colorProgram.getUniformLocation("mySampler");
+    glUniform1i(textureLocation, 0);
+
+//    // Send time to shader
+//    GLuint timeLocation = _colorProgram.getUniformLocation("time");
+//    glUniform1f(timeLocation, _time);
 
     _sprite.draw();
 
-    // Send time to shader
-    GLuint timeLocation = _colorProgram.getUniformLocation("time");
-    glUniform1f(timeLocation, _time);
-
+    // Unbind texture
+    glBindTexture(GL_TEXTURE_2D, 0);
     _colorProgram.unuse();
     SDL_GL_SwapWindow(_window);
 }
@@ -101,5 +110,6 @@ void MainGame::initShaders() {
                                  "shaders/colorShading.frag");
     _colorProgram.addAttribute("vertexPosition");
     _colorProgram.addAttribute("vertexColor");
+    _colorProgram.addAttribute("vertexUV");
     _colorProgram.linkShaders();
 }
