@@ -3,6 +3,7 @@
 #include "string"
 #include "OpenGL/gl3.h"
 #include "Errors.h"
+#include "ImageLoader.h"
 
 MainGame::MainGame() :
         _window(nullptr),
@@ -16,6 +17,8 @@ void MainGame::run() {
     initSystems();
 
     _sprite.init(-1.0f, -1.0f, 1.5f, 1.5f);
+
+    _playerTexture = ImageLoader::loadPNG("textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
 
     gameLoop();
 }
