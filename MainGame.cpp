@@ -4,11 +4,12 @@
 #include "OpenGL/gl3.h"
 #include "Errors.h"
 
-MainGame::MainGame() {
-    _window = nullptr;
-    _screenWidth = 1024;
-    _screenHeight = 768;
-    _gameState = GameState::PLAY;
+MainGame::MainGame() :
+        _window(nullptr),
+        _screenWidth(1024),
+        _screenHeight(768),
+        _gameState(GameState::PLAY),
+        _time(0.0f) {
 }
 
 void MainGame::run() {
@@ -59,6 +60,7 @@ void MainGame::gameLoop() {
     while (_gameState != GameState::EXIT) {
         processInput();
         drawGame();
+        _time += 0.01;
     }
 }
 
@@ -80,7 +82,12 @@ void MainGame::drawGame() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     _colorProgram.use();
+
     _sprite.draw();
+
+    // Send time to shader
+    GLuint timeLocation = _colorProgram.getUniformLocation("time");
+    glUniform1f(timeLocation, _time);
 
     _colorProgram.unuse();
     SDL_GL_SwapWindow(_window);

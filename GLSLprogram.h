@@ -13,12 +13,16 @@ public:
 
     void linkShaders();
 
-    void addAttribute(const std::string& attributeName);
+    void addAttribute(const std::string &attributeName);
+
+    GLint getUniformLocation(const std::string &uniformName);
 
     void use();
+
     void unuse();
+
 private:
-    void compileShader(const std::string& filePath, GLuint id);
+    void compileShader(const std::string &filePath, GLuint id);
 
     GLuint _programID;
 

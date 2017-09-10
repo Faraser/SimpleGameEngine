@@ -3,6 +3,8 @@
 out vec4 color;
 in vec4 fragmentColor;
 
+uniform float time;
+
 void main() {
-    color = fragmentColor;
+    color = fragmentColor * abs(sin(time));
 }
