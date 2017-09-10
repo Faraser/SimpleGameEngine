@@ -2,7 +2,7 @@
 #include "string"
 #include "SDL2/SDL.h"
 #include "iostream"
-
+#include "stdlib.h"
 
 void fatalError(std::string errorMsg) {
     std::cout << errorMsg << " SDL error: " << SDL_GetError() << std::endl;
@@ -10,5 +10,6 @@ void fatalError(std::string errorMsg) {
     int c;
     std::cin >> c;
     SDL_Quit();
+    exit(69);
 };
 

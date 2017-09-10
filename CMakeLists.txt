@@ -3,7 +3,7 @@ project(SimpleGameEngine)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SOURCE_FILES main.cpp MainGame.cpp MainGame.h Sprite.cpp Sprite.h GLSLprogram.cpp GLSLprogram.h Errors.cpp Errors.h)
+set(SOURCE_FILES main.cpp MainGame.cpp MainGame.h Sprite.cpp Sprite.h GLSLprogram.cpp GLSLprogram.h Errors.cpp Errors.h Vertex.h)
 add_executable(SimpleGameEngine ${SOURCE_FILES})
 
 include_directories(/usr/local/include)
