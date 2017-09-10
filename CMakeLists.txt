@@ -3,7 +3,7 @@ project(openGLTuror)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SOURCE_FILES main.cpp MainGame.cpp MainGame.h)
+set(SOURCE_FILES main.cpp MainGame.cpp MainGame.h Sprite.cpp Sprite.h)
 add_executable(openGLTuror ${SOURCE_FILES})
 
 include_directories(/usr/local/include)
