@@ -1,15 +1,8 @@
 #include "MainGame.h"
 #include "iostream"
 #include "string"
-#include "GL/glew.h"
-
-void fatalError(std::string errorMsg) {
-    std::cout << errorMsg << " SDL error: " << SDL_GetError() << std::endl;
-    std::cout << "Press any key to continue..." << std::endl;
-    int c;
-    std::cin >> c;
-    SDL_Quit();
-};
+#include "OpenGL/gl3.h"
+#include "Errors.h"
 
 MainGame::MainGame() {
     _window = nullptr;
@@ -44,19 +37,22 @@ void MainGame::initSystems() {
         fatalError("Window could not be created!");
     }
 
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
     SDL_GLContext glContext = SDL_GL_CreateContext(_window);
     if (glContext == nullptr) {
         fatalError("SDL_GLcontext could not been create");
     }
 
-    GLenum error = glewInit();
-    if (error != GLEW_OK) {
-        fatalError("Could not initialize glew");
-    }
-    glewExperimental = GL_TRUE;
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
+    GLuint vertexArrayID;
+    glGenVertexArrays(1, &vertexArrayID);
+    glBindVertexArray(vertexArrayID);
+
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+
+    initShaders();
 }
 
 void MainGame::gameLoop() {
@@ -74,7 +70,6 @@ void MainGame::processInput() {
                 _gameState = GameState::EXIT;
                 break;
             case SDL_MOUSEMOTION:
-                std::cout << evnt.motion.x << std::endl;
                 break;
         }
     };
@@ -84,15 +79,16 @@ void MainGame::drawGame() {
     glClearDepth(1.0);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-//    glEnableClientState(GL_COLOR_ARRAY);
-//    glBegin(GL_TRIANGLES);
-//    glColor3f(1.0f, 0.0f, 0.0f);
-//    glVertex2f(-1, -1);
-//    glVertex2f(0, 1);
-//    glVertex2f(1, 1);
-//
-//    glEnd();
+    _colorProgram.use();
     _sprite.draw();
 
+    _colorProgram.unuse();
     SDL_GL_SwapWindow(_window);
+}
+
+void MainGame::initShaders() {
+    _colorProgram.compileShaders("shaders/colorShading.vert",
+                                 "shaders/colorShading.frag");
+    _colorProgram.addAttribute("vertexPosition");
+    _colorProgram.linkShaders();
 }
