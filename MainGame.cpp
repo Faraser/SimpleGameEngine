@@ -9,7 +9,9 @@ MainGame::MainGame() :
         _screenWidth(1024),
         _screenHeight(768),
         _gameState(GameState::PLAY),
-        _time(0.0f) {
+        _time(0.0f),
+        _maxFPS(60.0f)
+{
 }
 
 void MainGame::run() {
@@ -66,9 +68,26 @@ void MainGame::initSystems() {
 
 void MainGame::gameLoop() {
     while (_gameState != GameState::EXIT) {
+        float startTicks = SDL_GetTicks();
+
+
         processInput();
-        drawGame();
         _time += 0.01;
+        drawGame();
+        calculateFPS();
+
+        static int frameCounter = 0;
+        frameCounter++;
+        if (frameCounter == 10) {
+            std::cout << _fps << std::endl;
+            frameCounter = 0;
+        }
+
+
+        float frameTicks = SDL_GetTicks() - startTicks;
+        if (1000.0f / _maxFPS > frameTicks) {
+           SDL_Delay(1000.0f / _maxFPS - frameTicks);
+        }
     }
 }
 
@@ -117,4 +136,38 @@ void MainGame::initShaders() {
     _colorProgram.addAttribute("vertexColor");
     _colorProgram.addAttribute("vertexUV");
     _colorProgram.linkShaders();
+}
+
+
+void MainGame::calculateFPS() {
+    static const int NUM_SAMPLES = 10;
+    static float frameTimes[NUM_SAMPLES];
+    static int currentFrame = 0;
+
+    static float prevTicks = SDL_GetTicks();
+    float currentTicks = SDL_GetTicks();
+
+    _frameTime = currentTicks - prevTicks;
+    frameTimes[currentFrame % NUM_SAMPLES] = _frameTime;
+    prevTicks = currentTicks;
+
+    currentFrame++;
+    int count;
+    if (currentFrame < NUM_SAMPLES) {
+        count = currentFrame;
+    } else {
+        count = NUM_SAMPLES;
+    }
+
+    float frameTimeAverage = 0;
+    for (int i = 0; i < count; i++) {
+        frameTimeAverage += frameTimes[i];
+    }
+    frameTimeAverage /= count;
+
+    if (frameTimeAverage > 0) {
+        _fps = 1000.0f / frameTimeAverage;
+    } else {
+        _fps = 60.f;
+    }
 }
