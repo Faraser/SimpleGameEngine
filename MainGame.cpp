@@ -3,7 +3,6 @@
 #include "string"
 #include "OpenGL/gl3.h"
 #include "Errors.h"
-#include "ImageLoader.h"
 
 MainGame::MainGame() :
         _window(nullptr),
@@ -16,9 +15,14 @@ MainGame::MainGame() :
 void MainGame::run() {
     initSystems();
 
-    _sprite.init(-1.0f, -1.0f, 1.5f, 1.5f);
+    _sprites.push_back(new Sprite());
+    _sprites.back()->init(-1.0f, -1.0f, 1.0f, 1.0f, "textures/jimmyJump_pack/PNG/peka.png");
 
-    _playerTexture = ImageLoader::loadPNG("textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
+    _sprites.push_back(new Sprite());
+    _sprites.back()->init(0.0f, 0.0f, 1.0f, 1.0f, "textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
+
+
+//    _playerTexture = ImageLoader::loadPNG("textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
 //    _playerTexture = ImageLoader::loadPNG("textures/jimmyJump_pack/PNG/peka.png");
 
     gameLoop();
@@ -87,7 +91,6 @@ void MainGame::drawGame() {
 
     _colorProgram.use();
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, _playerTexture.id);
 
     // Send texture to shader
     GLint textureLocation = _colorProgram.getUniformLocation("mySampler");
@@ -97,7 +100,9 @@ void MainGame::drawGame() {
 //    GLuint timeLocation = _colorProgram.getUniformLocation("time");
 //    glUniform1f(timeLocation, _time);
 
-    _sprite.draw();
+    for (auto sprite : _sprites) {
+        sprite->draw();
+    }
 
     // Unbind texture
     glBindTexture(GL_TEXTURE_2D, 0);

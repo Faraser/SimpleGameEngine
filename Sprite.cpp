@@ -1,6 +1,8 @@
 #include "Sprite.h"
 #include "Vertex.h"
 #include "cstddef"
+#include "string"
+#include "ResourceManager.h"
 
 Sprite::Sprite() {
     _vboID = 0;
@@ -12,11 +14,13 @@ Sprite::~Sprite() {
     }
 }
 
-void Sprite::init(float x, float y, float width, float height) {
+void Sprite::init(float x, float y, float width, float height, const std::string &texturePath) {
     _x = x;
     _y = y;
     _width = width;
     _height = height;
+
+    _texture = ResourceManager::getTexture(texturePath);
 
     if (_vboID == 0) {
         glGenBuffers(1, &_vboID);
@@ -59,6 +63,9 @@ void Sprite::init(float x, float y, float width, float height) {
 }
 
 void Sprite::draw() {
+
+    glBindTexture(GL_TEXTURE_2D, _texture.id);
+
     glBindBuffer(GL_ARRAY_BUFFER, _vboID);
     glEnableVertexAttribArray(0);
 
@@ -67,7 +74,7 @@ void Sprite::draw() {
     // Color attribute pointer
     glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void *) offsetof(Vertex, color));
     // UV attribute pointer
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, uv));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *) offsetof(Vertex, uv));
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
 
