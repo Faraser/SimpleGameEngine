@@ -1,4 +1,6 @@
 #pragma once
 #include "string"
 
-extern void fatalError(std::string errorMsg);
+namespace Engine {
+    extern void fatalError(std::string errorMsg);
+}

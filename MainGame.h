@@ -23,13 +23,13 @@ private:
     void drawGame();
     void calculateFPS();
 
-    Window _window;
+    Engine::Window _window;
     int _screenWidth;
     int _screenHeight;
     GameState _gameState;
-    std::vector<Sprite*> _sprites;
+    std::vector<Engine::Sprite*> _sprites;
 
-    GLSLprogram _colorProgram;
+    Engine::GLSLprogram _colorProgram;
 
     float _fps;
     float _maxFPS;

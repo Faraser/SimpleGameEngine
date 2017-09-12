@@ -16,21 +16,16 @@ MainGame::MainGame() :
 void MainGame::run() {
     initSystems();
 
-    _sprites.push_back(new Sprite());
+    _sprites.push_back(new Engine::Sprite());
     _sprites.back()->init(-1.0f, -1.0f, 1.0f, 1.0f, "textures/jimmyJump_pack/PNG/peka.png");
 
-    _sprites.push_back(new Sprite());
+    _sprites.push_back(new Engine::Sprite());
     _sprites.back()->init(0.0f, 0.0f, 1.0f, 1.0f, "textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
 
     gameLoop();
 }
 
 void MainGame::initSystems() {
-    if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-        fatalError("SDL could not initialize!");
-    };
-
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
     _window.create("Game Engine", _screenWidth, _screenHeight, 0);
 
