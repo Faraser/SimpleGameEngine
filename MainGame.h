@@ -4,6 +4,7 @@
 #include "engine/GLSLprogram.h"
 #include "engine/GLTexture.h"
 #include "vector"
+#include "engine/Window.h"
 
 enum class GameState { PLAY, EXIT };
 
@@ -22,7 +23,7 @@ private:
     void drawGame();
     void calculateFPS();
 
-    SDL_Window * _window;
+    Window _window;
     int _screenWidth;
     int _screenHeight;
     GameState _gameState;

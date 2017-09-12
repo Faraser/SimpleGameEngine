@@ -3,7 +3,7 @@ project(SimpleGameEngine)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SOURCE_FILES main.cpp MainGame.cpp MainGame.h engine/Sprite.cpp engine/Sprite.h engine/GLSLprogram.cpp engine/GLSLprogram.h engine/Errors.cpp engine/Errors.h engine/Vertex.h engine/IOManager.cpp engine/IOManager.h engine/picoPNG.h engine/picoPNG.cpp engine/GLTexture.h engine/ImageLoader.cpp engine/ImageLoader.h engine/ResourceManager.cpp engine/ResourceManager.h engine/TextureCache.cpp engine/TextureCache.h)
+set(SOURCE_FILES main.cpp MainGame.cpp MainGame.h engine/Sprite.cpp engine/Sprite.h engine/GLSLprogram.cpp engine/GLSLprogram.h engine/Errors.cpp engine/Errors.h engine/Vertex.h engine/IOManager.cpp engine/IOManager.h engine/picoPNG.h engine/picoPNG.cpp engine/GLTexture.h engine/ImageLoader.cpp engine/ImageLoader.h engine/ResourceManager.cpp engine/ResourceManager.h engine/TextureCache.cpp engine/TextureCache.h engine/Window.cpp engine/Window.h)
 add_executable(SimpleGameEngine ${SOURCE_FILES})
 
 include_directories(/usr/local/include)
