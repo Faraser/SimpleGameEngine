@@ -1,8 +1,8 @@
 #pragma once
 #include "SDL2/SDL.h"
-#include "Sprite.h"
-#include "GLSLprogram.h"
-#include "GLTexture.h"
+#include "engine/Sprite.h"
+#include "engine/GLSLprogram.h"
+#include "engine/GLTexture.h"
 #include "vector"
 
 enum class GameState { PLAY, EXIT };

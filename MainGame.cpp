@@ -2,7 +2,7 @@
 #include "iostream"
 #include "string"
 #include "OpenGL/gl3.h"
-#include "Errors.h"
+#include "engine/Errors.h"
 
 MainGame::MainGame() :
         _window(nullptr),
@@ -35,6 +35,8 @@ void MainGame::initSystems() {
         fatalError("SDL could not initialize!");
     };
 
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
     _window = SDL_CreateWindow(
             "Game engine",
             SDL_WINDOWPOS_CENTERED,
@@ -54,8 +56,6 @@ void MainGame::initSystems() {
     if (glContext == nullptr) {
         fatalError("SDL_GLcontext could not been create");
     }
-
-    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
     GLuint vertexArrayID;
     glGenVertexArrays(1, &vertexArrayID);

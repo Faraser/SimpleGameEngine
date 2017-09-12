@@ -3,6 +3,7 @@
 #include "vector"
 #include "fstream"
 #include "iostream"
+#include "OpenGL/gl3.h"
 
 GLSLprogram::GLSLprogram() :
         _programID(0),

@@ -3,6 +3,7 @@
 #include "cstddef"
 #include "string"
 #include "ResourceManager.h"
+#include "OpenGL/gl3.h"
 
 Sprite::Sprite() {
     _vboID = 0;

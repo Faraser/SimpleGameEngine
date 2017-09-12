@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OpenGL/gl3.h"
+#include "OpenGL/OpenGL.h"
 #include "GLTexture.h"
 #include "string"
 

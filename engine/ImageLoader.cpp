@@ -2,6 +2,7 @@
 #include "picoPNG.h"
 #include "IOManager.h"
 #include "Errors.h"
+#include "OpenGL/gl3.h"
 
 GLTexture ImageLoader::loadPNG(const std::string &filePath) {
     GLTexture texture = {};

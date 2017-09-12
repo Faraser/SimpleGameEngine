@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Opengl/gl3.h"
+#include "OpenGL/OpenGL.h"
 
 struct Position {
     float x;
