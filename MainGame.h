@@ -5,6 +5,7 @@
 #include "engine/GLTexture.h"
 #include "vector"
 #include "engine/Window.h"
+#include "engine/Camera2D.h"
 
 enum class GameState { PLAY, EXIT };
 
@@ -30,6 +31,7 @@ private:
     std::vector<Engine::Sprite*> _sprites;
 
     Engine::GLSLprogram _colorProgram;
+    Engine::Camera2D _camera;
 
     float _fps;
     float _maxFPS;
