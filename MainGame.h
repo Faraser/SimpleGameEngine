@@ -6,6 +6,7 @@
 #include "vector"
 #include "engine/Window.h"
 #include "engine/Camera2D.h"
+#include "engine/SpriteBatch.h"
 
 enum class GameState { PLAY, EXIT };
 
@@ -28,10 +29,11 @@ private:
     int _screenWidth;
     int _screenHeight;
     GameState _gameState;
-    std::vector<Engine::Sprite*> _sprites;
 
     Engine::GLSLprogram _colorProgram;
     Engine::Camera2D _camera;
+
+    Engine::SpriteBatch _spriteBatch;
 
     float _fps;
     float _maxFPS;
