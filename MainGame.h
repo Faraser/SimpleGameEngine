@@ -7,6 +7,7 @@
 #include "engine/Window.h"
 #include "engine/Camera2D.h"
 #include "engine/SpriteBatch.h"
+#include "engine/InputManager.h"
 
 enum class GameState { PLAY, EXIT };
 
@@ -34,6 +35,8 @@ private:
     Engine::Camera2D _camera;
 
     Engine::SpriteBatch _spriteBatch;
+
+    Engine::InputManager _inputManager;
 
     float _fps;
     float _maxFPS;

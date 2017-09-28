@@ -67,7 +67,7 @@ void MainGame::gameLoop() {
 void MainGame::processInput() {
     SDL_Event evnt;
 
-    const float CAMERA_SPEED = 20.0f;
+    const float CAMERA_SPEED = 2.0f;
     const float SCALE_SPEED = 0.1f;
 
     while (SDL_PollEvent(&evnt)) {
@@ -78,27 +78,35 @@ void MainGame::processInput() {
             case SDL_MOUSEMOTION:
                 break;
             case SDL_KEYDOWN:
-                switch (evnt.key.keysym.sym) {
-                    case SDLK_w:
-                        _camera.setPosition(_camera.getPosition() + glm::vec2(0.0f, -CAMERA_SPEED));
-                        break;
-                    case SDLK_s:
-                        _camera.setPosition(_camera.getPosition() + glm::vec2(0.0f, CAMERA_SPEED));
-                        break;
-                    case SDLK_a:
-                        _camera.setPosition(_camera.getPosition() + glm::vec2(CAMERA_SPEED, 0.0f));
-                        break;
-                    case SDLK_d:
-                        _camera.setPosition(_camera.getPosition() + glm::vec2(-CAMERA_SPEED, 0.0f));
-                        break;
-                    case SDLK_q:
-                        _camera.setScale(_camera.getScale() + SCALE_SPEED);
-                        break;
-                    case SDLK_e:
-                        _camera.setScale(_camera.getScale() - SCALE_SPEED);
-                        break;
-                }
+                _inputManager.pressKey(evnt.key.keysym.sym);
                 break;
+            case SDL_KEYUP:
+                _inputManager.releaseKey(evnt.key.keysym.sym);
+                break;
+        }
+
+        if (_inputManager.isKeyPressed(SDLK_w)) {
+            _camera.setPosition(_camera.getPosition() + glm::vec2(0.0f, -CAMERA_SPEED));
+        }
+
+        if (_inputManager.isKeyPressed(SDLK_s)) {
+            _camera.setPosition(_camera.getPosition() + glm::vec2(0.0f, CAMERA_SPEED));
+        }
+
+        if (_inputManager.isKeyPressed(SDLK_a)) {
+            _camera.setPosition(_camera.getPosition() + glm::vec2(CAMERA_SPEED, 0.0f));
+        }
+
+        if (_inputManager.isKeyPressed(SDLK_d)) {
+            _camera.setPosition(_camera.getPosition() + glm::vec2(-CAMERA_SPEED, 0.0f));
+        }
+
+        if (_inputManager.isKeyPressed(SDLK_q)) {
+            _camera.setScale(_camera.getScale() + SCALE_SPEED);
+        }
+
+        if (_inputManager.isKeyPressed(SDLK_e)) {
+            _camera.setScale(_camera.getScale() - SCALE_SPEED);
         }
     };
 }
