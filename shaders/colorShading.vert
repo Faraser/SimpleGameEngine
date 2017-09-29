@@ -8,7 +8,6 @@ layout (location = 2) in vec2 vertexUV;
  out vec4 fragmentColor;
  out vec2 fragmentUV;
 
-// uniform float time;
  uniform mat4 P;
 
  void main() {

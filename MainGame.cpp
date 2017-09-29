@@ -110,10 +110,6 @@ void MainGame::drawGame() {
     GLint textureLocation = _colorProgram.getUniformLocation("mySampler");
     glUniform1i(textureLocation, 0);
 
-//    // Send time to shader
-//    GLint timeLocation = _colorProgram.getUniformLocation("time");
-//    glUniform1f(timeLocation, _time);
-
     // Send camera matrix to shader
     GLint pLocation = _colorProgram.getUniformLocation("P");
     glm::mat4 cameraMatrix = _camera.getCameraMatrix();

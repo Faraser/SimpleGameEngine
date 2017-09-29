@@ -47,11 +47,11 @@ namespace Engine {
             fatalError("SDL_GLcontext could not been create");
         }
 
-        GLuint vertexArrayID;
-        glGenVertexArrays(1, &vertexArrayID);
-        glBindVertexArray(vertexArrayID);
-
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+
+        // Enable alpha-blending
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
         return 0;
     }
