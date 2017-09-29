@@ -16,14 +16,6 @@ MainGame::MainGame() :
 
 void MainGame::run() {
     initSystems();
-
-//    _sprites.push_back(new Engine::Sprite());
-//    _sprites.back()->init(0.0f, 0.0f, _screenWidth / 2, _screenHeight / 2, "textures/jimmyJump_pack/PNG/peka.png");
-//
-//    _sprites.push_back(new Engine::Sprite());
-//    _sprites.back()->init(_screenWidth / 2, 0.0f, _screenWidth / 2, _screenHeight / 2,
-//                          "textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
-
     gameLoop();
 }
 
@@ -34,12 +26,12 @@ void MainGame::initSystems() {
     initShaders();
 
     _spriteBatch.init();
+    _fpsLimiter.init(_maxFPS);
 }
 
 void MainGame::gameLoop() {
     while (_gameState != GameState::EXIT) {
-        float startTicks = SDL_GetTicks();
-
+        _fpsLimiter.begin();
 
         processInput();
         _time += 0.01;
@@ -47,19 +39,15 @@ void MainGame::gameLoop() {
         _camera.update();
 
         drawGame();
-        calculateFPS();
 
+        _fps = _fpsLimiter.end();
+
+        // Print fps every 10 frames
         static int frameCounter = 0;
         frameCounter++;
         if (frameCounter == 10) {
-//            std::cout << _fps << std::endl;
+            std::cout << _fps << std::endl;
             frameCounter = 0;
-        }
-
-
-        float frameTicks = SDL_GetTicks() - startTicks;
-        if (1000.0f / _maxFPS > frameTicks) {
-            SDL_Delay(1000.0f / _maxFPS - frameTicks);
         }
     }
 }
@@ -159,38 +147,4 @@ void MainGame::initShaders() {
     _colorProgram.addAttribute("vertexColor");
     _colorProgram.addAttribute("vertexUV");
     _colorProgram.linkShaders();
-}
-
-
-void MainGame::calculateFPS() {
-    static const int NUM_SAMPLES = 10;
-    static float frameTimes[NUM_SAMPLES];
-    static int currentFrame = 0;
-
-    static float prevTicks = SDL_GetTicks();
-    float currentTicks = SDL_GetTicks();
-
-    _frameTime = currentTicks - prevTicks;
-    frameTimes[currentFrame % NUM_SAMPLES] = _frameTime;
-    prevTicks = currentTicks;
-
-    currentFrame++;
-    int count;
-    if (currentFrame < NUM_SAMPLES) {
-        count = currentFrame;
-    } else {
-        count = NUM_SAMPLES;
-    }
-
-    float frameTimeAverage = 0;
-    for (int i = 0; i < count; i++) {
-        frameTimeAverage += frameTimes[i];
-    }
-    frameTimeAverage /= count;
-
-    if (frameTimeAverage > 0) {
-        _fps = 1000.0f / frameTimeAverage;
-    } else {
-        _fps = 60.f;
-    }
 }

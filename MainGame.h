@@ -8,6 +8,7 @@
 #include "engine/Camera2D.h"
 #include "engine/SpriteBatch.h"
 #include "engine/InputManager.h"
+#include "engine/Timing.h"
 
 enum class GameState { PLAY, EXIT };
 
@@ -24,7 +25,6 @@ private:
     void gameLoop();
     void processInput();
     void drawGame();
-    void calculateFPS();
 
     Engine::Window _window;
     int _screenWidth;
@@ -37,10 +37,10 @@ private:
     Engine::SpriteBatch _spriteBatch;
 
     Engine::InputManager _inputManager;
+    Engine::FpsLimiter _fpsLimiter;
 
     float _fps;
     float _maxFPS;
-    float _frameTime;
 
     float _time;
 };
