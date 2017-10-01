@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Engine/GLSLprogram.h"
-#include "Engine/Window.h"
-#include "Engine/Camera2D.h"
-#include "Engine/InputManager.h"
+#include "../Engine/GLSLprogram.h"
+#include "../Engine/Window.h"
+#include "../Engine/Camera2D.h"
+#include "../Engine/InputManager.h"
 
 class MainGame {
 public:

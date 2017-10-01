@@ -1,6 +1,6 @@
 #include "MainGame.h"
-#include "SDL2/SDl.h"
-#include "OpenGL/gl3.h"
+#include "SDL2/SDL.h"
+#include "OpenGL/OpenGL.h"
 
 MainGame::MainGame() {
 
