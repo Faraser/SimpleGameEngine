@@ -1,7 +1,7 @@
 #pragma once
 
 #include "glm/glm.hpp"
-#include "engine/SpriteBatch.h"
+#include "Engine/SpriteBatch.h"
 
 class Bullet {
 public:

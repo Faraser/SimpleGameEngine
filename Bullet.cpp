@@ -1,5 +1,5 @@
 #include "Bullet.h"
-#include "engine/ResourceManager.h"
+#include "Engine/ResourceManager.h"
 
 Bullet::Bullet(glm::vec2 position, glm::vec2 direction, float speed, int lifeTime) :
         _position(position),
@@ -17,7 +17,7 @@ void Bullet::draw(Engine::SpriteBatch &spriteBatch) {
     Engine::Color color = {255, 255, 255, 255};
 
     static Engine::GLTexture texture = Engine::ResourceManager::getTexture(
-            "textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
+            "Textures/red_bricks.png");
     glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
     glm::vec4 posAndSize(_position.x, _position.y, 30, 30);
 

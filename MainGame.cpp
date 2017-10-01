@@ -2,8 +2,8 @@
 #include "iostream"
 #include "string"
 #include "OpenGL/gl3.h"
-#include "engine/Errors.h"
-#include "engine/ResourceManager.h"
+#include "Engine/Errors.h"
+#include "Engine/ResourceManager.h"
 
 MainGame::MainGame() :
         _screenWidth(1024),
@@ -142,7 +142,7 @@ void MainGame::drawGame() {
     glm::vec4 pos(0.0f, 0.0f, 50.0f, 50.0f);
     glm::vec4 uv(0.0f, 0.0f, 1.0f, 1.0f);
     static Engine::GLTexture texture = Engine::ResourceManager::getTexture(
-            "textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
+            "Textures/circle.png");
     Engine::Color color = {255, 255, 255, 255};
     _spriteBatch.draw(pos, uv, texture.id, 0.0f, color);
 
@@ -167,8 +167,8 @@ void MainGame::drawGame() {
 }
 
 void MainGame::initShaders() {
-    _colorProgram.compileShaders("shaders/colorShading.vert",
-                                 "shaders/colorShading.frag");
+    _colorProgram.compileShaders("Shaders/colorShading.vert",
+                                 "Shaders/colorShading.frag");
     _colorProgram.addAttribute("vertexPosition");
     _colorProgram.addAttribute("vertexColor");
     _colorProgram.addAttribute("vertexUV");

@@ -1,14 +1,14 @@
 #pragma once
 #include "SDL2/SDL.h"
-#include "engine/Sprite.h"
-#include "engine/GLSLprogram.h"
-#include "engine/GLTexture.h"
+#include "Engine/Sprite.h"
+#include "Engine/GLSLprogram.h"
+#include "Engine/GLTexture.h"
 #include "vector"
-#include "engine/Window.h"
-#include "engine/Camera2D.h"
-#include "engine/SpriteBatch.h"
-#include "engine/InputManager.h"
-#include "engine/Timing.h"
+#include "Engine/Window.h"
+#include "Engine/Camera2D.h"
+#include "Engine/SpriteBatch.h"
+#include "Engine/InputManager.h"
+#include "Engine/Timing.h"
 
 #include "Bullet.h"
 

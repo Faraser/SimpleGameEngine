@@ -3,7 +3,7 @@ project(SimpleGameEngine)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SOURCE_FILES main.cpp MainGame.cpp MainGame.h engine/Sprite.cpp engine/Sprite.h engine/GLSLprogram.cpp engine/GLSLprogram.h engine/Errors.cpp engine/Errors.h engine/Vertex.h engine/IOManager.cpp engine/IOManager.h engine/picoPNG.h engine/picoPNG.cpp engine/GLTexture.h engine/ImageLoader.cpp engine/ImageLoader.h engine/ResourceManager.cpp engine/ResourceManager.h engine/TextureCache.cpp engine/TextureCache.h engine/Window.cpp engine/Window.h engine/Engine.cpp engine/Engine.h engine/Camera2D.cpp engine/Camera2D.h engine/SpriteBatch.cpp engine/SpriteBatch.h engine/InputManager.cpp engine/InputManager.h engine/Timing.cpp engine/Timing.h Bullet.cpp Bullet.h)
+set(SOURCE_FILES main.cpp MainGame.cpp MainGame.h Engine/Sprite.cpp Engine/Sprite.h Engine/GLSLprogram.cpp Engine/GLSLprogram.h Engine/Errors.cpp Engine/Errors.h Engine/Vertex.h Engine/IOManager.cpp Engine/IOManager.h Engine/picoPNG.h Engine/picoPNG.cpp Engine/GLTexture.h Engine/ImageLoader.cpp Engine/ImageLoader.h Engine/ResourceManager.cpp Engine/ResourceManager.h Engine/TextureCache.cpp Engine/TextureCache.h Engine/Window.cpp Engine/Window.h Engine/Engine.cpp Engine/Engine.h Engine/Camera2D.cpp Engine/Camera2D.h Engine/SpriteBatch.cpp Engine/SpriteBatch.h Engine/InputManager.cpp Engine/InputManager.h Engine/Timing.cpp Engine/Timing.h Bullet.cpp Bullet.h)
 add_executable(SimpleGameEngine ${SOURCE_FILES})
 
 include_directories(/usr/local/include)
