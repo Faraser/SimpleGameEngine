@@ -1,7 +1,7 @@
 #include "InputManager.h"
 
 namespace Engine {
-InputManager::InputManager() {
+InputManager::InputManager() : _mouseCoords(0.0f, 0.0f) {
 
 }
 
@@ -25,4 +25,10 @@ bool InputManager::isKeyPressed(unsigned int keyId) {
         return false;
     }
 }
+
+void InputManager::setMouseCoords(float x, float y) {
+    _mouseCoords.x = x;
+    _mouseCoords.y = y;
+}
+
 }

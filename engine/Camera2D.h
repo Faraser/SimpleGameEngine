@@ -14,6 +14,8 @@ namespace Engine {
 
         void init(int screenWidth, int screenHeight);
 
+        glm::vec2 convertScreenToWorld(glm::vec2 screenCoords);
+
         void setPosition(const glm::vec2 &newPosition) {
             _position = newPosition;
             _needsMatrixUpdate = true;
