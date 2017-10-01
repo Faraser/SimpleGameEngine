@@ -10,6 +10,8 @@
 #include "engine/InputManager.h"
 #include "engine/Timing.h"
 
+#include "Bullet.h"
+
 enum class GameState { PLAY, EXIT };
 
 class MainGame {
@@ -43,6 +45,8 @@ private:
     float _maxFPS;
 
     float _time;
+
+    std::vector<Bullet> _bullets;
 };
 
 
