@@ -22,11 +22,6 @@ Level::Level(const std::string &fileName) {
         _levelData.push_back(tmp);
     }
 
-    // Print it out
-//    for (const auto & line : _levelData) {
-//        std::cout << line << std::endl;
-//    }
-
     _spriteBatch.init();
     _spriteBatch.begin();
 

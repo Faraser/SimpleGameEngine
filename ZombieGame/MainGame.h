@@ -4,8 +4,10 @@
 #include "../Engine/Window.h"
 #include "../Engine/Camera2D.h"
 #include "../Engine/InputManager.h"
+#include "../Engine/SpriteBatch.h"
 
 #include "Level.h"
+#include "Player.h"
 
 #include "vector"
 
@@ -21,16 +23,21 @@ public:
 private:
     void initSystems();
     void initShaders();
+    void initLevel();
     void gameLoop();
     void processInput();
     void drawGame();
+    void updateAgents();
 
     Engine::Window _window;
     Engine::Camera2D _camera;
     Engine::InputManager _inputManager;
     Engine::GLSLprogram _textureProgram;
+    Engine::SpriteBatch _agentSpriteBatch;
 
     std::vector<Level*> _levels;
+    std::vector<Human*> _humans;
+    Player * _player;
 
     int _screenWidth;
     int _screenHeight;

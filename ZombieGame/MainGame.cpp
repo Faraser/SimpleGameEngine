@@ -12,7 +12,8 @@ MainGame::MainGame() :
         _screenWidth(1024),
         _screenHeight(768),
         _gameState(GameState::PLAY),
-        _fps(0)
+        _fps(0),
+        _player(nullptr)
 {
 
 }
@@ -27,6 +28,7 @@ MainGame::~MainGame() {
 
 void MainGame::run() {
     initSystems();
+    initLevel();
 
     gameLoop();
 }
@@ -36,10 +38,10 @@ void MainGame::initSystems() {
     _window.create("Zombie Game", _screenWidth, _screenHeight, 0);
 
     initShaders();
-    _camera.init(_screenWidth, _screenHeight);
 
-    _levels.push_back(new Level("Levels/level1.txt"));
-    _currentLevel = 0;
+    _agentSpriteBatch.init();
+
+    _camera.init(_screenWidth, _screenHeight);
 }
 
 void MainGame::initShaders() {
@@ -51,6 +53,24 @@ void MainGame::initShaders() {
     _textureProgram.linkShaders();
 }
 
+void MainGame::initLevel() {
+    _levels.push_back(new Level("Levels/level1.txt"));
+    _currentLevel = 0;
+
+    _player = new Player();
+    _player -> init(4.0f, _levels[_currentLevel]->getStartPlayerPos(), &_inputManager);
+
+    _humans.push_back(_player);
+}
+
+
+void MainGame::updateAgents() {
+    for (int i=0; i < _humans.size(); i++) {
+        _humans[i]->update();
+    }
+}
+
+
 void MainGame::gameLoop() {
     Engine::FpsLimiter fpsLimiter;
     fpsLimiter.setMaxFPS(60.0f);
@@ -59,6 +79,10 @@ void MainGame::gameLoop() {
         fpsLimiter.begin();
 
         processInput();
+
+        updateAgents();
+
+        _camera.setPosition(_player->getPosition());
         _camera.update();
 
         drawGame();
@@ -117,6 +141,14 @@ void MainGame::drawGame() {
 
     // Draw the level
     _levels[_currentLevel]->draw();
+
+    // Draw the humans
+    _agentSpriteBatch.begin();
+    for (int i=0; i<_humans.size(); i++) {
+        _humans[i]->draw(_agentSpriteBatch);
+    }
+    _agentSpriteBatch.end();
+    _agentSpriteBatch.renderBatch();
 
     _textureProgram.unuse();
 
