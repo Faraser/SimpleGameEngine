@@ -1,42 +1,81 @@
 #include "MainGame.h"
 #include "SDL2/SDL.h"
-#include "OpenGL/OpenGL.h"
+#include "OpenGL/gl3.h"
 
-MainGame::MainGame() {
+#include "../Engine/Engine.h"
+#include "../Engine/Timing.h"
 
+#include "iostream"
+
+
+MainGame::MainGame() :
+        _screenWidth(1024),
+        _screenHeight(768),
+        _gameState(GameState::PLAY),
+        _fps(0)
+{
+
+}
+
+MainGame::~MainGame() {
+    for (Level *level: _levels) {
+        delete level;
+    }
+
+    _levels.clear();
 }
 
 void MainGame::run() {
+    initSystems();
 
+    gameLoop();
 }
 
 void MainGame::initSystems() {
+    Engine::init();
+    _window.create("Zombie Game", _screenWidth, _screenHeight, 0);
 
+    initShaders();
+    _camera.init(_screenWidth, _screenHeight);
+
+    _levels.push_back(new Level("Levels/level1.txt"));
+    _currentLevel = 0;
 }
 
 void MainGame::initShaders() {
-    _colorProgram.compileShaders("Shaders/colorShading.vert",
+    _textureProgram.compileShaders("Shaders/colorShading.vert",
                                  "Shaders/colorShading.frag");
-    _colorProgram.addAttribute("vertexPosition");
-    _colorProgram.addAttribute("vertexColor");
-    _colorProgram.addAttribute("vertexUV");
-    _colorProgram.linkShaders();
+    _textureProgram.addAttribute("vertexPosition");
+    _textureProgram.addAttribute("vertexColor");
+    _textureProgram.addAttribute("vertexUV");
+    _textureProgram.linkShaders();
 }
 
 void MainGame::gameLoop() {
+    Engine::FpsLimiter fpsLimiter;
+    fpsLimiter.setMaxFPS(60.0f);
+
+    while (_gameState == GameState::PLAY) {
+        fpsLimiter.begin();
+
+        processInput();
+        _camera.update();
+
+        drawGame();
+
+        _fps = (int) fpsLimiter.end();
+    }
 
 }
 
 void MainGame::processInput() {
     SDL_Event evnt;
 
-    const float CAMERA_SPEED = 2.0f;
-    const float SCALE_SPEED = 0.1f;
-
     while (SDL_PollEvent(&evnt)) {
         switch (evnt.type) {
             case SDL_QUIT:
                 // Exit game
+                _gameState = GameState::EXIT;
                 break;
             case SDL_MOUSEMOTION:
                 _inputManager.setMouseCoords(evnt.motion.x, evnt.motion.y);
@@ -54,12 +93,35 @@ void MainGame::processInput() {
                 _inputManager.releaseKey(evnt.button.button);
                 break;
         }
+    }
 }
 
 void MainGame::drawGame() {
+    // Set the base depth to 0
     glClearDepth(1.0);
+    // Clear the color and depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    _textureProgram.use();
+
+    glActiveTexture(GL_TEXTURE0);
+
+    // Make sure the shader uses texture 0
+    GLint textureUniform = _textureProgram.getUniformLocation("mySampler");
+    glUniform1i(textureUniform, 0);
+
+    // Grap the camera matrix
+    glm::mat4 projectionMatrix = _camera.getCameraMatrix();
+    GLint pUniform = _textureProgram.getUniformLocation("P");
+    glUniformMatrix4fv(pUniform, 1, GL_FALSE, &projectionMatrix[0][0]);
+
+    // Draw the level
+    _levels[_currentLevel]->draw();
+
+    _textureProgram.unuse();
+
+    // Swap buffer and draw everything to the screen
     _window.swapBuffer();
+
 }
 
