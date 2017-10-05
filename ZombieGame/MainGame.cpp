@@ -1,20 +1,19 @@
 #include "MainGame.h"
 #include "SDL2/SDL.h"
 #include "OpenGL/gl3.h"
+#include "iostream"
 
 #include "../Engine/Engine.h"
 #include "../Engine/Timing.h"
 
-#include "iostream"
-
+#include "Zombie.h"
 
 MainGame::MainGame() :
         _screenWidth(1024),
         _screenHeight(768),
         _gameState(GameState::PLAY),
         _fps(0),
-        _player(nullptr)
-{
+        _player(nullptr) {
 
 }
 
@@ -46,7 +45,7 @@ void MainGame::initSystems() {
 
 void MainGame::initShaders() {
     _textureProgram.compileShaders("Shaders/colorShading.vert",
-                                 "Shaders/colorShading.frag");
+                                   "Shaders/colorShading.frag");
     _textureProgram.addAttribute("vertexPosition");
     _textureProgram.addAttribute("vertexColor");
     _textureProgram.addAttribute("vertexUV");
@@ -58,15 +57,15 @@ void MainGame::initLevel() {
     _currentLevel = 0;
 
     _player = new Player();
-    _player -> init(4.0f, _levels[_currentLevel]->getStartPlayerPos(), &_inputManager);
+    _player->init(4.0f, _levels[_currentLevel]->getStartPlayerPos(), &_inputManager);
 
     _humans.push_back(_player);
 }
 
 
 void MainGame::updateAgents() {
-    for (int i=0; i < _humans.size(); i++) {
-        _humans[i]->update();
+    for (int i = 0; i < _humans.size(); i++) {
+        _humans[i]->update(_levels[_currentLevel]->getLevelData(), _humans, _zombies);
     }
 }
 
@@ -144,7 +143,7 @@ void MainGame::drawGame() {
 
     // Draw the humans
     _agentSpriteBatch.begin();
-    for (int i=0; i<_humans.size(); i++) {
+    for (int i = 0; i < _humans.size(); i++) {
         _humans[i]->draw(_agentSpriteBatch);
     }
     _agentSpriteBatch.end();

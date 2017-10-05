@@ -11,22 +11,33 @@
 
 #include "vector"
 
-enum class GameState { PLAY, EXIT };
+class Zombie;
+
+enum class GameState {
+    PLAY, EXIT
+};
 
 class MainGame {
 public:
     MainGame();
+
     ~MainGame();
 
     void run();
 
 private:
     void initSystems();
+
     void initShaders();
+
     void initLevel();
+
     void gameLoop();
+
     void processInput();
+
     void drawGame();
+
     void updateAgents();
 
     Engine::Window _window;
@@ -35,9 +46,12 @@ private:
     Engine::GLSLprogram _textureProgram;
     Engine::SpriteBatch _agentSpriteBatch;
 
-    std::vector<Level*> _levels;
-    std::vector<Human*> _humans;
-    Player * _player;
+    std::vector<Level *> _levels;
+
+    std::vector<Human *> _humans;
+    std::vector<Zombie *> _zombies;
+
+    Player *_player;
 
     int _screenWidth;
     int _screenHeight;

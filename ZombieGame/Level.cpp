@@ -4,7 +4,6 @@
 #include "../Engine/Errors.h"
 #include "../Engine/ResourceManager.h"
 
-const int TILE_WIDTH = 64;
 
 Level::Level(const std::string &fileName) {
     std::ifstream file;
@@ -68,10 +67,12 @@ Level::Level(const std::string &fileName) {
                     );
                     break;
                 case '@':
+                    _levelData[y][x] = '.'; // Don't collide
                     _startPlayerPosition.x = x * TILE_WIDTH;
                     _startPlayerPosition.y = y * TILE_WIDTH;
                     break;
                 case 'Z':
+                    _levelData[y][x] = '.'; // Don't collide
                     _zombieStartPosition.emplace_back(x * TILE_WIDTH, y * TILE_WIDTH);
                     break;
                 case '.':
