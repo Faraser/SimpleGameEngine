@@ -22,6 +22,12 @@ public:
 
     const std::vector<std::string>& getLevelData() const { return _levelData; };
 
+    int getNumHumans() const { return _numHumans; };
+
+    int getWidth() const { return (int) _levelData[0].size(); };
+
+    int getHeight() const { return (int) _levelData.size(); };
+
 private:
     std::vector<std::string> _levelData;
     int _numHumans;

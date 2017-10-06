@@ -2,6 +2,8 @@
 #include "SDL2/SDL.h"
 #include "OpenGL/gl3.h"
 #include "iostream"
+#include "random"
+#include "ctime"
 
 #include "../Engine/Engine.h"
 #include "../Engine/Timing.h"
@@ -60,6 +62,20 @@ void MainGame::initLevel() {
     _player->init(4.0f, _levels[_currentLevel]->getStartPlayerPos(), &_inputManager);
 
     _humans.push_back(_player);
+
+
+    std::mt19937 randomEngine;
+    randomEngine.seed(time(nullptr));
+    std::uniform_int_distribution<int> randX(2, _levels[_currentLevel]->getWidth() - 2);
+    std::uniform_int_distribution<int> randY(2, _levels[_currentLevel]->getHeight() - 2);
+
+    const float HUMAN_SPEED = 1.0f;
+
+    for (int i = 0; i < _levels[_currentLevel]->getNumHumans(); i++) {
+        _humans.push_back(new Human);
+        _humans.back()->init(HUMAN_SPEED,
+                             glm::vec2(randX(randomEngine) * TILE_WIDTH, randY(randomEngine) * TILE_WIDTH));
+    }
 }
 
 
