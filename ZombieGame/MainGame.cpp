@@ -18,7 +18,7 @@ MainGame::MainGame() :
 }
 
 MainGame::~MainGame() {
-    for (Level *level: _levels) {
+    for (Level* level: _levels) {
         delete level;
     }
 

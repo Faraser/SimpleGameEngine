@@ -1,5 +1,5 @@
 #pragma once
 
 namespace Engine {
-    extern int init();
+extern int init();
 }

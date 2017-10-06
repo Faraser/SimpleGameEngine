@@ -9,7 +9,7 @@ Player::~Player() {
 
 }
 
-void Player::init(float speed, glm::vec2 position, Engine::InputManager *inputManager) {
+void Player::init(float speed, glm::vec2 position, Engine::InputManager* inputManager) {
     _speed = speed;
     _position = position;
     _color = {0, 0, 185, 255};
@@ -17,9 +17,9 @@ void Player::init(float speed, glm::vec2 position, Engine::InputManager *inputMa
 }
 
 void Player::update(
-        const std::vector<std::string> &levelData,
-        std::vector<Human *> &humans,
-        std::vector<Zombie *> &zombies
+        const std::vector<std::string>& levelData,
+        std::vector<Human*>& humans,
+        std::vector<Zombie*>& zombies
 ) {
     if (_inputManager->isKeyPressed(SDLK_w)) {
         _position.y += _speed;

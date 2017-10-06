@@ -17,21 +17,21 @@ public:
     virtual ~Agent();
 
     virtual void update(
-            const std::vector<std::string> &levelData,
-            std::vector<Human *> &humans,
-            std::vector<Zombie *> &zombies
+            const std::vector<std::string>& levelData,
+            std::vector<Human*>& humans,
+            std::vector<Zombie*>& zombies
     ) = 0;
 
-    void collideWithLevel(const std::vector<std::string> &levelData);
+    void collideWithLevel(const std::vector<std::string>& levelData);
 
-    void draw(Engine::SpriteBatch &spriteBatch);
+    void draw(Engine::SpriteBatch& spriteBatch);
 
     glm::vec2 getPosition() const { return _position; };
 
 protected:
     void checkTilePosition(
-            const std::vector<std::string> &levelData,
-            std::vector<glm::vec2> &collideTilePositions,
+            const std::vector<std::string>& levelData,
+            std::vector<glm::vec2>& collideTilePositions,
             float x,
             float y
     );

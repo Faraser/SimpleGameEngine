@@ -5,7 +5,7 @@
 #include "../Engine/ResourceManager.h"
 
 
-Level::Level(const std::string &fileName) {
+Level::Level(const std::string& fileName) {
     std::ifstream file;
     file.open(fileName);
 

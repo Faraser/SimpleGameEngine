@@ -13,7 +13,7 @@ Agent::~Agent() {
 
 }
 
-void Agent::draw(Engine::SpriteBatch &spriteBatch) {
+void Agent::draw(Engine::SpriteBatch& spriteBatch) {
     static int textureID = Engine::ResourceManager::getTexture("Textures/circle.png").id;
     const glm::vec4 uvRect(0.0f, 0.0f, 1.0f, 1.0f);
 
@@ -26,7 +26,7 @@ void Agent::draw(Engine::SpriteBatch &spriteBatch) {
     spriteBatch.draw(destRect, uvRect, textureID, 0.0f, _color);
 }
 
-void Agent::collideWithLevel(const std::vector<std::string> &levelData) {
+void Agent::collideWithLevel(const std::vector<std::string>& levelData) {
     std::vector<glm::vec2> collideTilePositions;
 
     // Check the four corners
@@ -40,7 +40,7 @@ void Agent::collideWithLevel(const std::vector<std::string> &levelData) {
     }
 }
 
-void Agent::checkTilePosition(const std::vector<std::string> &levelData, std::vector<glm::vec2> &collideTilePositions,
+void Agent::checkTilePosition(const std::vector<std::string>& levelData, std::vector<glm::vec2>& collideTilePositions,
                               float x, float y) {
     glm::vec2 cornerPos = glm::vec2(floor(x / (float) TILE_WIDTH),
                                     floor(y / (float) TILE_WIDTH));

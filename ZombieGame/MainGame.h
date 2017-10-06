@@ -46,12 +46,12 @@ private:
     Engine::GLSLprogram _textureProgram;
     Engine::SpriteBatch _agentSpriteBatch;
 
-    std::vector<Level *> _levels;
+    std::vector<Level*> _levels;
 
-    std::vector<Human *> _humans;
-    std::vector<Zombie *> _zombies;
+    std::vector<Human*> _humans;
+    std::vector<Zombie*> _zombies;
 
-    Player *_player;
+    Player* _player;
 
     int _screenWidth;
     int _screenHeight;

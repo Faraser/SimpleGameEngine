@@ -44,7 +44,7 @@ public:
 
     void end();
 
-    void draw(const glm::vec4 &destRect, const glm::vec4 &uvRect, GLuint texture, float depth, const Color &color);
+    void draw(const glm::vec4& destRect, const glm::vec4& uvRect, GLuint texture, float depth, const Color& color);
 
     void renderBatch();
 
@@ -55,18 +55,18 @@ private:
 
     void sortGlyphs();
 
-    static bool compareFrontToBack(Glyph *a, Glyph *b);
+    static bool compareFrontToBack(Glyph* a, Glyph* b);
 
-    static bool compareBackToFront(Glyph *a, Glyph *b);
+    static bool compareBackToFront(Glyph* a, Glyph* b);
 
-    static bool compareTexture(Glyph *a, Glyph *b);
+    static bool compareTexture(Glyph* a, Glyph* b);
 
     GLuint _vbo;
     GLuint _vao;
 
     GlyphSortType _sortType;
 
-    std::vector<Glyph *> _glyphs;
+    std::vector<Glyph*> _glyphs;
     std::vector<RenderBatch> _renderBatches;
 
 };

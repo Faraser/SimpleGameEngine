@@ -19,7 +19,7 @@ void SpriteBatch::begin(GlyphSortType sortType) {
     _sortType = sortType;
     _renderBatches.clear();
 
-    for (const auto & glyph : _glyphs) {
+    for (const auto& glyph : _glyphs) {
         delete glyph;
     }
     _glyphs.clear();
@@ -31,12 +31,12 @@ void SpriteBatch::end() {
 }
 
 void SpriteBatch::draw(
-        const glm::vec4 &destRect,
-        const glm::vec4 &uvRect,
+        const glm::vec4& destRect,
+        const glm::vec4& uvRect,
         GLuint texture,
         float depth,
-        const Color &color) {
-    Glyph *newGlyph = new Glyph;
+        const Color& color) {
+    Glyph* newGlyph = new Glyph;
 
     newGlyph->texture = texture;
     newGlyph->depth = depth;
@@ -85,11 +85,11 @@ void SpriteBatch::createVertexArray() {
     glEnableVertexAttribArray(2);
 
     // Position attribute pointer
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *) offsetof(Vertex, position));
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*) offsetof(Vertex, position));
     // Color attribute pointer
-    glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void *) offsetof(Vertex, color));
+    glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void*) offsetof(Vertex, color));
     // UV attribute pointer
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *) offsetof(Vertex, uv));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*) offsetof(Vertex, uv));
 
     glBindVertexArray(0);
 }
@@ -108,15 +108,15 @@ void SpriteBatch::sortGlyphs() {
     }
 }
 
-bool SpriteBatch::compareFrontToBack(Glyph *a, Glyph *b) {
+bool SpriteBatch::compareFrontToBack(Glyph* a, Glyph* b) {
     return a->depth < b->depth;
 };
 
-bool SpriteBatch::compareBackToFront(Glyph *a, Glyph *b) {
+bool SpriteBatch::compareBackToFront(Glyph* a, Glyph* b) {
     return a->depth > b->depth;
 }
 
-bool SpriteBatch::compareTexture(Glyph *a, Glyph *b) {
+bool SpriteBatch::compareTexture(Glyph* a, Glyph* b) {
     return a->texture < b->texture;
 }
 

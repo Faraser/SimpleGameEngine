@@ -1,6 +1,6 @@
 #include "ZombieGame/MainGame.h"
 
-int main(int argc, char ** argv) {
+int main(int argc, char** argv) {
     MainGame mainGame;
     mainGame.run();
 

@@ -10,8 +10,8 @@ public:
     virtual ~Human();
 
     virtual void update(
-            const std::vector<std::string> &levelData,
-            std::vector<Human *> &humans,
-            std::vector<Zombie *> &zombies
+            const std::vector<std::string>& levelData,
+            std::vector<Human*>& humans,
+            std::vector<Zombie*>& zombies
     );
 };

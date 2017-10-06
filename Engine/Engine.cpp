@@ -3,13 +3,13 @@
 #include "Errors.h"
 
 namespace Engine {
-    int init() {
-        if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-            fatalError("SDL could not initialize!");
-        };
+int init() {
+    if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+        fatalError("SDL could not initialize!");
+    };
 
-        SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-        return 0;
-    }
+    return 0;
+}
 }
