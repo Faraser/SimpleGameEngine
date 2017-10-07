@@ -26,7 +26,7 @@ void Agent::draw(Engine::SpriteBatch& spriteBatch) {
     spriteBatch.draw(destRect, uvRect, textureID, 0.0f, _color);
 }
 
-void Agent::collideWithLevel(const std::vector<std::string>& levelData) {
+bool Agent::collideWithLevel(const std::vector<std::string>& levelData) {
     std::vector<glm::vec2> collideTilePositions;
 
     // Check the four corners
@@ -38,6 +38,8 @@ void Agent::collideWithLevel(const std::vector<std::string>& levelData) {
     for (int i = 0; i < collideTilePositions.size(); i++) {
         collideWithTile(collideTilePositions[i]);
     }
+
+    return !collideTilePositions.empty();
 }
 
 void Agent::checkTilePosition(const std::vector<std::string>& levelData, std::vector<glm::vec2>& collideTilePositions,
