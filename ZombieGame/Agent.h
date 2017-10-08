@@ -4,7 +4,8 @@
 #include "../Engine/SpriteBatch.h"
 #include "../Engine/Vertex.h"
 
-const float AGENT_WIDTH = 60;
+const float AGENT_WIDTH = 60.0f;
+const float AGENT_RADIUS = AGENT_WIDTH / 2.0f;
 
 class Zombie;
 
@@ -23,6 +24,8 @@ public:
     ) = 0;
 
     bool collideWithLevel(const std::vector<std::string>& levelData);
+
+    bool collideWithAgent(Agent* agent);
 
     void draw(Engine::SpriteBatch& spriteBatch);
 
