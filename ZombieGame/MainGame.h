@@ -8,6 +8,7 @@
 
 #include "Level.h"
 #include "Player.h"
+#include "Bullet.h"
 
 #include "vector"
 
@@ -40,6 +41,8 @@ private:
 
     void updateAgents();
 
+    void updateBullets();
+
     Engine::Window _window;
     Engine::Camera2D _camera;
     Engine::InputManager _inputManager;
@@ -50,6 +53,7 @@ private:
 
     std::vector<Human*> _humans;
     std::vector<Zombie*> _zombies;
+    std::vector<Bullet> _bullets;
 
     Player* _player;
 

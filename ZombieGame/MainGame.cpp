@@ -10,6 +10,7 @@
 #include "../Engine/Errors.h"
 
 #include "Zombie.h"
+#include "Gun.h"
 
 const float HUMAN_SPEED = 1.0f;
 const float ZOMBIE_SPEED = 1.3f;
@@ -66,7 +67,7 @@ void MainGame::initLevel() {
 
     // Add the player
     _player = new Player();
-    _player->init(PLAYER_SPEED, _levels[_currentLevel]->getStartPlayerPos(), &_inputManager);
+    _player->init(PLAYER_SPEED, _levels[_currentLevel]->getStartPlayerPos(), &_inputManager, &_camera, &_bullets);
 
     _humans.push_back(_player);
 
@@ -84,12 +85,18 @@ void MainGame::initLevel() {
     }
 
     // Add the zombies
-
     const std::vector<glm::vec2>& zombiePositions = _levels[_currentLevel]->getZombieStartPositions();
     for (int i = 0; i < zombiePositions.size(); i++) {
         _zombies.push_back(new Zombie);
         _zombies.back()->init(ZOMBIE_SPEED, zombiePositions[i]);
     }
+
+    // Set up the players guns
+    const float BULLET_SPEED = 7.0f;
+
+    _player->addGun(new Gun("Magnum", 30, 1, glm::radians(10.0f), 30, BULLET_SPEED));
+    _player->addGun(new Gun("Shotgun", 60, 20, glm::radians(40.0f), 4, BULLET_SPEED));
+    _player->addGun(new Gun("MP5", 5, 1, glm::radians(20.0f), 20, BULLET_SPEED));
 }
 
 
@@ -137,6 +144,11 @@ void MainGame::updateAgents() {
     }
 }
 
+void MainGame::updateBullets() {
+    for (int i = 0; i < _bullets.size(); i++) {
+       _bullets[i].update(_humans, _zombies);
+    }
+}
 
 void MainGame::gameLoop() {
     Engine::FpsLimiter fpsLimiter;
@@ -148,6 +160,8 @@ void MainGame::gameLoop() {
         processInput();
 
         updateAgents();
+
+        updateBullets();
 
         _camera.setPosition(_player->getPosition());
         _camera.update();
@@ -219,6 +233,11 @@ void MainGame::drawGame() {
     // Draw the zombies
     for (int i = 0; i < _zombies.size(); i++) {
         _zombies[i]->draw(_agentSpriteBatch);
+    }
+
+    // Draw the bullets
+    for (int i=0; i < _bullets.size(); i++) {
+        _bullets[i].draw(_agentSpriteBatch);
     }
     
     _agentSpriteBatch.end();
