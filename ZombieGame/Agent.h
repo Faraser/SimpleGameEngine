@@ -31,6 +31,9 @@ public:
 
     glm::vec2 getPosition() const { return _position; };
 
+    // Return true if agent die
+    bool applyDamage(float damage);
+
 protected:
     void checkTilePosition(
             const std::vector<std::string>& levelData,
@@ -42,7 +45,8 @@ protected:
     void collideWithTile(glm::vec2 tilePos);
 
     glm::vec2 _position;
-    float _speed;
     Engine::Color _color;
+    float _speed;
+    float _health;
 };
 

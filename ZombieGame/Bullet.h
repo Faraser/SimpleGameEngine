@@ -2,8 +2,11 @@
 
 #include <glm/glm.hpp>
 #include <vector>
+#include "string"
+
 #include "../Engine/SpriteBatch.h"
 
+class Agent;
 class Human;
 class Zombie;
 
@@ -15,11 +18,18 @@ public:
 
     ~Bullet();
 
-    void update(std::vector<Human*>& humans, std::vector<Zombie*>& zombies);
+    // When update returns true, delete bullet
+    bool update(const std::vector<std::string>& levelData);
 
     void draw(Engine::SpriteBatch& spriteBatch);
 
+    bool collideWithAgent(Agent * agent);
+
+    float getDamage() const { return _damage; };
+
 private:
+    bool collideWithWorld(const std::vector<std::string>& levelData);
+
     glm::vec2 _position;
     glm::vec2 _direction;
     float _damage;

@@ -108,4 +108,10 @@ void Agent::collideWithTile(glm::vec2 tilePos) {
     }
 }
 
+bool Agent::applyDamage(float damage) {
+    _health -= damage;
+    if (_health <= 0) return true;
+    return false;
+}
+
 

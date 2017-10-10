@@ -42,6 +42,7 @@ void Human::init(float speed, glm::vec2 position) {
     _color = { 200, 0, 200, 255 };
     _speed = speed;
     _position = position;
+    _health = 20;
 
     // Get random direction
     _direction = glm::vec2(randDir(randomEngine), randDir(randomEngine));

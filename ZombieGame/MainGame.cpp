@@ -131,7 +131,7 @@ void MainGame::updateAgents() {
         }
 
         // Collide with player
-        if (_zombies[i] ->collideWithAgent(_player)) {
+        if (_zombies[i]->collideWithAgent(_player)) {
             Engine::fatalError("GAME OVER");
         }
     }
@@ -145,8 +145,45 @@ void MainGame::updateAgents() {
 }
 
 void MainGame::updateBullets() {
+    // Update and collide with world
+    for (int i = 0; i < _bullets.size();) {
+        if (_bullets[i].update(_levels[_currentLevel]->getLevelData())) {
+            _bullets[i] = _bullets.back();
+            _bullets.pop_back();
+        } else {
+            i++;
+        };
+
+    }
+
+    // Collide with humans and zombies
     for (int i = 0; i < _bullets.size(); i++) {
-       _bullets[i].update(_humans, _zombies);
+        // Loop through zombies
+        for (int j = 0; j < _zombies.size();) {
+            // Check collision
+            if (_bullets[i].collideWithAgent(_zombies[j])) {
+
+                // Damage zombie, and kill it if its out of health
+                if (_zombies[j]->applyDamage(_bullets[i].getDamage())) {
+                    // If zombie died, remove them
+                    delete _zombies[j];
+                    _zombies[j] = _zombies.back();
+                    _zombies.pop_back();
+                } else {
+                    j++;
+                }
+
+                // Remove the bullet
+                _bullets[i] = _bullets.back();
+                _bullets.pop_back();
+                // Make sure we don't skip the bullet
+                i--;
+                // Since the bullet died, no need to loop through any more zombies
+                break;
+            } else {
+                j++;
+            }
+        }
     }
 }
 
@@ -236,10 +273,10 @@ void MainGame::drawGame() {
     }
 
     // Draw the bullets
-    for (int i=0; i < _bullets.size(); i++) {
+    for (int i = 0; i < _bullets.size(); i++) {
         _bullets[i].draw(_agentSpriteBatch);
     }
-    
+
     _agentSpriteBatch.end();
     _agentSpriteBatch.renderBatch();
 

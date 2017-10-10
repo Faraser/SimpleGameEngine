@@ -15,6 +15,7 @@ void Player::init(float speed, glm::vec2 position, Engine::InputManager* inputMa
     _speed = speed;
     _position = position;
     _color = {0, 0, 185, 255};
+    _health = 150;
     _inputManager = inputManager;
     _camera = camera,
     _bullets = bullets;
