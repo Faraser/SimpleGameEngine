@@ -157,7 +157,10 @@ void MainGame::updateBullets() {
     }
 
     // Collide with humans and zombies
+    bool wasBulletRemoved = false;
+
     for (int i = 0; i < _bullets.size(); i++) {
+        wasBulletRemoved = false;
         // Loop through zombies
         for (int j = 0; j < _zombies.size();) {
             // Check collision
@@ -176,6 +179,7 @@ void MainGame::updateBullets() {
                 // Remove the bullet
                 _bullets[i] = _bullets.back();
                 _bullets.pop_back();
+                wasBulletRemoved = true;
                 // Make sure we don't skip the bullet
                 i--;
                 // Since the bullet died, no need to loop through any more zombies
@@ -184,7 +188,37 @@ void MainGame::updateBullets() {
                 j++;
             }
         }
+
+        if (!wasBulletRemoved) {
+            // Loop through humans, skip player
+            for (int j = 1; j < _humans.size();) {
+                // Check collision
+                if (_bullets[i].collideWithAgent(_humans[j])) {
+
+                    // Damage human, and kill it if its out of health
+                    if (_humans[j]->applyDamage(_bullets[i].getDamage())) {
+                        // If zombie died, remove them
+                        delete _humans[j];
+                        _humans[j] = _humans.back();
+                        _humans.pop_back();
+                    } else {
+                        j++;
+                    }
+
+                    // Remove the bullet
+                    _bullets[i] = _bullets.back();
+                    _bullets.pop_back();
+                    // Make sure we don't skip the bullet
+                    i--;
+                    // Since the bullet died, no need to loop through any more zombies
+                    break;
+                } else {
+                    j++;
+                }
+            }
+        }
     }
+
 }
 
 void MainGame::gameLoop() {
