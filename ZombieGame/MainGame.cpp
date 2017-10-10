@@ -22,13 +22,23 @@ MainGame::MainGame() :
         _screenHeight(768),
         _gameState(GameState::PLAY),
         _fps(0),
-        _player(nullptr) {
+        _player(nullptr),
+        _numHumansKilled(0),
+        _numZombiesKilled(0) {
 
 }
 
 MainGame::~MainGame() {
     for (Level* level: _levels) {
         delete level;
+    }
+
+    for (Human* human: _humans) {
+        delete human;
+    }
+
+    for (Zombie* zombie: _zombies) {
+        delete zombie;
     }
 
     _levels.clear();
@@ -172,6 +182,7 @@ void MainGame::updateBullets() {
                     delete _zombies[j];
                     _zombies[j] = _zombies.back();
                     _zombies.pop_back();
+                    _numZombiesKilled++;
                 } else {
                     j++;
                 }
@@ -201,6 +212,7 @@ void MainGame::updateBullets() {
                         delete _humans[j];
                         _humans[j] = _humans.back();
                         _humans.pop_back();
+                        _numHumansKilled++;
                     } else {
                         j++;
                     }
@@ -227,6 +239,8 @@ void MainGame::gameLoop() {
 
     while (_gameState == GameState::PLAY) {
         fpsLimiter.begin();
+
+        checkVictory();
 
         processInput();
 
@@ -319,5 +333,15 @@ void MainGame::drawGame() {
     // Swap buffer and draw everything to the screen
     _window.swapBuffer();
 
+}
+
+void MainGame::checkVictory() {
+    // If all zombies are dead, we win
+    if (_zombies.empty()) {
+        std::cout << "You killed " << _numZombiesKilled << " zombies" << std::endl;
+        std::cout << "You killed " << _numHumansKilled << " humans" << std::endl;
+        std::cout << "Humans remaining " << _humans.size() - 1 << std::endl;
+        Engine::fatalError("You win!");
+    }
 }
 
