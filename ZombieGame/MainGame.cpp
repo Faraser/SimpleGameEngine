@@ -60,6 +60,7 @@ void MainGame::initSystems() {
     _agentSpriteBatch.init();
 
     _camera.init(_screenWidth, _screenHeight);
+    _camera.setScale(0.25f);
 }
 
 void MainGame::initShaders() {
@@ -275,6 +276,7 @@ void MainGame::gameLoop() {
         drawGame();
 
         _fps = (int) fpsLimiter.end();
+        std::cout << _fps << std::endl;
     }
 
 }
