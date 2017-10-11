@@ -35,7 +35,7 @@ void SpriteBatch::draw(
         const glm::vec4& uvRect,
         GLuint texture,
         float depth,
-        const Color& color) {
+        const ColorRGBA8& color) {
     Glyph* newGlyph = new Glyph;
 
     newGlyph->texture = texture;
@@ -86,7 +86,7 @@ void SpriteBatch::createVertexArray() {
 
     // Position attribute pointer
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*) offsetof(Vertex, position));
-    // Color attribute pointer
+    // ColorRGBA8 attribute pointer
     glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void*) offsetof(Vertex, color));
     // UV attribute pointer
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*) offsetof(Vertex, uv));

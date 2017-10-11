@@ -28,7 +28,7 @@ Level::Level(const std::string& fileName) {
     _spriteBatch.begin();
 
     glm::vec4 uvRect(0.0f, 0.0f, 1.0f, 1.0f);
-    Engine::Color whiteColor = {255, 255, 255, 255};
+    Engine::ColorRGBA8 whiteColor = {255, 255, 255, 255};
 
     // Render all the tiles
     for (int y = 0; y < _levelData.size(); y++) {

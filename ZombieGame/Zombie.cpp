@@ -14,9 +14,9 @@ void Zombie::update(
         std::vector<Human*>& humans,
         std::vector<Zombie*>& zombies
 ) {
-    Human * closestHuman = getNearestHuman(humans);
+    Human* closestHuman = getNearestHuman(humans);
     if (closestHuman != nullptr) {
-        glm::vec2 direction = glm::normalize(closestHuman -> getPosition() - _position);
+        glm::vec2 direction = glm::normalize(closestHuman->getPosition() - _position);
         _position += direction * _speed;
     }
 

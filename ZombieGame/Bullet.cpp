@@ -27,7 +27,7 @@ void Bullet::draw(Engine::SpriteBatch& spriteBatch) {
 
     const glm::vec4 uvRect(0.0f, 0.0f, 1.0f, 1.0f);
 
-    Engine::Color color = {0, 0, 0, 255};
+    Engine::ColorRGBA8 color = {0, 0, 0, 255};
 
     spriteBatch.draw(destRect, uvRect, Engine::ResourceManager::getTexture("Textures/circle.png").id, 0.0f, color);
 }
