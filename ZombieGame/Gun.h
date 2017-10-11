@@ -12,7 +12,7 @@ public:
 
     ~Gun();
 
-    void update(bool isMouseDown, const glm::vec2& position, const glm::vec2& direction, std::vector<Bullet>& bullets);
+    void update(bool isMouseDown, const glm::vec2& position, const glm::vec2& direction, std::vector<Bullet>& bullets, float deltaTime);
 
 private:
     void fire(const glm::vec2& position, const glm::vec2& direction, std::vector<Bullet>& bullets);
@@ -27,5 +27,5 @@ private:
 
     float _spread; // Accuracy
 
-    int _frameCounter;
+    float _frameCounter;
 };

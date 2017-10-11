@@ -39,9 +39,9 @@ private:
 
     void drawGame();
 
-    void updateAgents();
+    void updateAgents(float deltaTime);
 
-    void updateBullets();
+    void updateBullets(float deltaTime);
 
     void checkVictory();
 
