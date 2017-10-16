@@ -32,6 +32,8 @@ public:
 
     glm::mat4 getCameraMatrix() { return _cameraMatrix; }
 
+    bool isBoxInView(const glm::vec2& position, const glm::vec2& dimensions);
+
 private:
     int _screenWidth;
     int _screenHeight;
