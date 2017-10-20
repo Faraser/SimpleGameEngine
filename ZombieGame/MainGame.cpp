@@ -57,10 +57,19 @@ void MainGame::initSystems() {
 
     initShaders();
 
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+
     _agentSpriteBatch.init();
+    _hudSpriteBatch.init();
+
+    // Initialize SpriteFont
+    _spriteFont = new Engine::SpriteFont("Fonts/chintzy.ttf", 32);
 
     _camera.init(_screenWidth, _screenHeight);
     _camera.setScale(0.25f);
+
+    _hudCamera.init(_screenWidth, _screenHeight);
+    _hudCamera.setPosition(glm::vec2(_screenWidth / 2.0f, _screenHeight / 2.0f));
 }
 
 void MainGame::initShaders() {
@@ -273,6 +282,8 @@ void MainGame::gameLoop() {
         _camera.setPosition(_player->getPosition());
         _camera.update();
 
+        _hudCamera.update();
+
         drawGame();
 
         _fps = (int) fpsLimiter.end();
@@ -357,6 +368,8 @@ void MainGame::drawGame() {
     _agentSpriteBatch.end();
     _agentSpriteBatch.renderBatch();
 
+    drawHud();
+
     _textureProgram.unuse();
 
     // Swap buffer and draw everything to the screen
@@ -372,5 +385,29 @@ void MainGame::checkVictory() {
         std::cout << "Humans remaining " << _humans.size() - 1 << std::endl;
         Engine::fatalError("You win!");
     }
+}
+
+void MainGame::drawHud() {
+    char buffer[256];
+
+    // Grap the camera matrix
+    glm::mat4 projectionMatrix = _hudCamera.getCameraMatrix();
+    GLint pUniform = _textureProgram.getUniformLocation("P");
+    glUniformMatrix4fv(pUniform, 1, GL_FALSE, &projectionMatrix[0][0]);
+
+    _hudSpriteBatch.begin();
+
+    sprintf(buffer, "Num humans %d", (int) _humans.size());
+
+    _spriteFont->draw(_hudSpriteBatch, buffer, glm::vec2(0), glm::vec4(1.0f), 0.0f,
+                      Engine::ColorRGBA8(255, 255, 255, 255));
+
+    sprintf(buffer, "Num zombies %d", (int) _zombies.size());
+
+    _spriteFont->draw(_hudSpriteBatch, buffer, glm::vec2(_screenWidth, 0), glm::vec4(1.0f), 0.0f,
+                      Engine::ColorRGBA8(255, 255, 255, 255), Engine::Justification::RIGHT);
+
+    _hudSpriteBatch.end();
+    _hudSpriteBatch.renderBatch();
 }
 

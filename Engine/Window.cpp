@@ -47,7 +47,6 @@ int Window::create(const std::string& windowName, int screenWidth, int screenHei
         fatalError("SDL_GLcontext could not been create");
     }
 
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
     // Enable alpha-blending
     glEnable(GL_BLEND);

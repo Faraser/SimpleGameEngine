@@ -5,6 +5,7 @@
 #include "../Engine/Camera2D.h"
 #include "../Engine/InputManager.h"
 #include "../Engine/SpriteBatch.h"
+#include "../Engine/SpriteFont.h"
 
 #include "Level.h"
 #include "Player.h"
@@ -39,6 +40,8 @@ private:
 
     void drawGame();
 
+    void drawHud();
+
     void updateAgents(float deltaTime);
 
     void updateBullets(float deltaTime);
@@ -46,10 +49,16 @@ private:
     void checkVictory();
 
     Engine::Window _window;
+
     Engine::Camera2D _camera;
+    Engine::Camera2D _hudCamera;
+
     Engine::InputManager _inputManager;
     Engine::GLSLprogram _textureProgram;
+
     Engine::SpriteBatch _agentSpriteBatch;
+    Engine::SpriteBatch _hudSpriteBatch;
+    Engine::SpriteFont * _spriteFont;
 
     std::vector<Level*> _levels;
 
