@@ -1,6 +1,6 @@
 #include "SDL2/SDL.h"
 #include "Engine.h"
-#include "Errors.h"
+#include "EngineErrors.h"
 
 namespace Engine {
 int init() {

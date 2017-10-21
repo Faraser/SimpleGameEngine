@@ -7,7 +7,7 @@
 
 #include "../Engine/Engine.h"
 #include "../Engine/Timing.h"
-#include "../Engine/Errors.h"
+#include "../Engine/EngineErrors.h"
 
 #include "Zombie.h"
 #include "Gun.h"
@@ -46,13 +46,20 @@ MainGame::~MainGame() {
 
 void MainGame::run() {
     initSystems();
+
     initLevel();
+
+    Engine::Music music = _audioEngine.loadMusic("Audio/Music/XYZ_0.ogg");
+    music.play(-1);
 
     gameLoop();
 }
 
 void MainGame::initSystems() {
     Engine::init();
+
+    _audioEngine.init();
+
     _window.create("Zombie Game", _screenWidth, _screenHeight, 0);
 
     initShaders();
@@ -114,9 +121,15 @@ void MainGame::initLevel() {
     // Set up the players guns
     const float BULLET_SPEED = 7.0f;
 
-    _player->addGun(new Gun("Magnum", 30, 1, glm::radians(10.0f), 30, BULLET_SPEED));
-    _player->addGun(new Gun("Shotgun", 60, 20, glm::radians(40.0f), 4, BULLET_SPEED));
-    _player->addGun(new Gun("MP5", 5, 1, glm::radians(20.0f), 20, BULLET_SPEED));
+    _player->addGun(new Gun("Magnum", 30, 1, glm::radians(10.0f), 30, BULLET_SPEED,
+                            _audioEngine.loadSoundEffect("Audio/Effect/gunshot.wav"))
+    );
+    _player->addGun(new Gun("Shotgun", 60, 20, glm::radians(40.0f), 4, BULLET_SPEED,
+                            _audioEngine.loadSoundEffect("Audio/Effect/shotgun.wav"))
+    );
+    _player->addGun(new Gun("MP5", 5, 1, glm::radians(20.0f), 20, BULLET_SPEED,
+                            _audioEngine.loadSoundEffect("Audio/Effect/rifle.wav"))
+    );
 }
 
 

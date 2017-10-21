@@ -3,14 +3,17 @@
 #include <random>
 #include <glm/gtx/rotate_vector.hpp>
 
-Gun::Gun(std::string name, int fireRate, int bulletsPerShot, float spread, float bulletDamage, float bulletSpeed) :
+Gun::Gun(std::string name, int fireRate, int bulletsPerShot, float spread, float bulletDamage, float bulletSpeed,
+         Engine::SoundEffect fireEffect) :
         _name(name),
         _fireRate(fireRate),
         _bulletsPerShot(bulletsPerShot),
         _spread(spread),
         _bulletDamage(bulletDamage),
         _bulletSpeed(bulletSpeed),
-        _frameCounter(0) {
+        _frameCounter(0),
+        _fireEffect(fireEffect)
+{
 
 }
 
@@ -30,6 +33,8 @@ void Gun::update(bool isMouseDown, const glm::vec2& position, const glm::vec2& d
 void Gun::fire(const glm::vec2& position, const glm::vec2& direction, std::vector<Bullet>& bullets) {
     static std::mt19937 randomEngine(time(nullptr));
     std::uniform_real_distribution<float> randRotate(-_spread, _spread);
+
+    _fireEffect.play();
 
     for (int i = 0; i < _bulletsPerShot; i++) {
         bullets.emplace_back(position, glm::rotate(direction, randRotate(randomEngine)), _bulletDamage, _bulletSpeed);

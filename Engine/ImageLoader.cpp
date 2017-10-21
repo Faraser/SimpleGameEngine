@@ -1,7 +1,7 @@
 #include "ImageLoader.h"
 #include "picoPNG.h"
 #include "IOManager.h"
-#include "Errors.h"
+#include "EngineErrors.h"
 #include "OpenGL/gl3.h"
 
 namespace Engine {

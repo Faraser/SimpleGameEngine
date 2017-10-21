@@ -6,6 +6,7 @@
 #include "../Engine/InputManager.h"
 #include "../Engine/SpriteBatch.h"
 #include "../Engine/SpriteFont.h"
+#include "../Engine/AudioEngine.h"
 
 #include "Level.h"
 #include "Player.h"
@@ -59,6 +60,8 @@ private:
     Engine::SpriteBatch _agentSpriteBatch;
     Engine::SpriteBatch _hudSpriteBatch;
     Engine::SpriteFont * _spriteFont;
+
+    Engine::AudioEngine _audioEngine;
 
     std::vector<Level*> _levels;
 

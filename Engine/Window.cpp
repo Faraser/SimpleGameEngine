@@ -1,5 +1,5 @@
 #include "Window.h"
-#include "Errors.h"
+#include "EngineErrors.h"
 #include "OpenGL/gl3.h"
 
 namespace Engine {
