@@ -34,6 +34,10 @@ AudioEngine::~AudioEngine() {
 }
 
 void AudioEngine::init() {
+    if (m_isInitialized) {
+        fatalError("Try to initialize Audio Engine twice");
+    }
+
     // Parameters can be a bitwise combination of MIX_INIT_FAC
     // MIX_INIT_MOD, MIX_INIT_MP3, MIX_INIT_OGG
     if (Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG) == -1) {
@@ -50,6 +54,18 @@ void AudioEngine::init() {
 void AudioEngine::destroy() {
     if (m_isInitialized) {
         m_isInitialized = false;
+
+        for (const auto& effect: m_effectMap) {
+            Mix_FreeChunk(effect.second);
+        }
+
+        for (const auto& music: m_musicMap) {
+            Mix_FreeMusic(music.second);
+        }
+
+        m_effectMap.clear();
+        m_musicMap.clear();
+
         Mix_Quit();
     }
 }
@@ -97,6 +113,5 @@ Music AudioEngine::loadMusic(const std::string& filePath) {
 
     return music;
 }
-
 
 }
