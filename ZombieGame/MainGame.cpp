@@ -1,13 +1,16 @@
 #include "MainGame.h"
 #include "SDL2/SDL.h"
 #include "OpenGL/gl3.h"
-#include "iostream"
-#include "random"
-#include "ctime"
+#include <iostream>
+#include <random>
+#include <ctime>
 
 #include "../Engine/Engine.h"
 #include "../Engine/Timing.h"
 #include "../Engine/EngineErrors.h"
+#include "../Engine/ResourceManager.h"
+
+#include "glm/gtx/rotate_vector.hpp"
 
 #include "Zombie.h"
 #include "Gun.h"
@@ -77,6 +80,11 @@ void MainGame::initSystems() {
 
     _hudCamera.init(_screenWidth, _screenHeight);
     _hudCamera.setPosition(glm::vec2(_screenWidth / 2.0f, _screenHeight / 2.0f));
+
+    // Initialize particles
+    _bloodParticleBatch = new Engine::ParticleBatch2D();
+    _bloodParticleBatch->init(1000, 0.05f, Engine::ResourceManager::getTexture("Textures/particle.png"));
+    _particleEngine.addParticleBatch(_bloodParticleBatch);
 }
 
 void MainGame::initShaders() {
@@ -198,6 +206,8 @@ void MainGame::updateBullets(float deltaTime) {
         for (int j = 0; j < _zombies.size();) {
             // Check collision
             if (_bullets[i].collideWithAgent(_zombies[j])) {
+                // Add blood
+                addBlood(_bullets[i].getPosition(), 5);
 
                 // Damage zombie, and kill it if its out of health
                 if (_zombies[j]->applyDamage(_bullets[i].getDamage())) {
@@ -228,6 +238,9 @@ void MainGame::updateBullets(float deltaTime) {
             for (int j = 1; j < _humans.size();) {
                 // Check collision
                 if (_bullets[i].collideWithAgent(_humans[j])) {
+
+                    // Add blood
+                    addBlood(_bullets[i].getPosition(), 5);
 
                     // Damage human, and kill it if its out of health
                     if (_humans[j]->applyDamage(_bullets[i].getDamage())) {
@@ -287,11 +300,13 @@ void MainGame::gameLoop() {
             float deltaTime = std::min(totalDeltaTime, MAX_DELTA_TIME);
             updateAgents(deltaTime);
             updateBullets(deltaTime);
+            _particleEngine.update(deltaTime);
             totalDeltaTime -= deltaTime;
             i++;
         }
 
 
+        // Make sure the camera is bound to the player position
         _camera.setPosition(_player->getPosition());
         _camera.update();
 
@@ -299,6 +314,7 @@ void MainGame::gameLoop() {
 
         drawGame();
 
+        // End the frame, limit the fps, and get the current fps
         _fps = (int) fpsLimiter.end();
         std::cout << _fps << std::endl;
     }
@@ -378,11 +394,19 @@ void MainGame::drawGame() {
         _bullets[i].draw(_agentSpriteBatch);
     }
 
+    // End spritebatch creation
     _agentSpriteBatch.end();
+
+    // Render to the screen
     _agentSpriteBatch.renderBatch();
 
+    // Render the particles
+    _particleEngine.draw(&_agentSpriteBatch);
+
+    // Render the heads up display
     drawHud();
 
+    // Unbind the program
     _textureProgram.unuse();
 
     // Swap buffer and draw everything to the screen
@@ -422,5 +446,17 @@ void MainGame::drawHud() {
 
     _hudSpriteBatch.end();
     _hudSpriteBatch.renderBatch();
+}
+
+void MainGame::addBlood(const glm::vec2& position, int numParticles) {
+    static std::mt19937 randEngine(time(nullptr));
+    static std::uniform_real_distribution<float> randAngle(0.0f, 360.0f);
+
+    glm::vec2 velocity(2.0f, 0.0f);
+    Engine::ColorRGBA8 col(255, 0, 0, 255);
+
+    for (int i = 0; i < numParticles; i++) {
+        _bloodParticleBatch->addParticle(position, glm::rotate(velocity, randAngle(randEngine)), col, 40.0f);
+    }
 }
 

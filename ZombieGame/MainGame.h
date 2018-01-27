@@ -7,12 +7,14 @@
 #include "../Engine/SpriteBatch.h"
 #include "../Engine/SpriteFont.h"
 #include "../Engine/AudioEngine.h"
+#include "../Engine/ParticleEngine2D.h"
+#include "../Engine/ParticleBatch2D.h"
 
 #include "Level.h"
 #include "Player.h"
 #include "Bullet.h"
 
-#include "vector"
+#include <vector>
 
 class Zombie;
 
@@ -49,6 +51,8 @@ private:
 
     void checkVictory();
 
+    void addBlood(const glm::vec2& position, int numParticles);
+
     Engine::Window _window;
 
     Engine::Camera2D _camera;
@@ -60,6 +64,9 @@ private:
     Engine::SpriteBatch _agentSpriteBatch;
     Engine::SpriteBatch _hudSpriteBatch;
     Engine::SpriteFont * _spriteFont;
+
+    Engine::ParticleEngine2D _particleEngine;
+    Engine::ParticleBatch2D* _bloodParticleBatch;
 
     Engine::AudioEngine _audioEngine;
 
