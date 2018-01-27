@@ -1,7 +1,7 @@
 #include "Human.h"
-#include "random"
-#include "ctime"
-#include "glm/gtx/rotate_vector.hpp"
+#include <random>
+#include <ctime>
+#include <glm/gtx/rotate_vector.hpp>
 
 Human::Human() :
     _frames(0)

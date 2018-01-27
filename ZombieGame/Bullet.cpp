@@ -2,7 +2,7 @@
 #include "Level.h"
 #include "Agent.h"
 
-#include "../Engine/ResourceManager.h"
+#include "Engine/ResourceManager.h"
 
 Bullet::Bullet(glm::vec2 position, glm::vec2 direction, float damage, float speed) :
         _position(position),

@@ -1,6 +1,7 @@
+#include "Player.h"
+
 #include <SDL_keycode.h>
 #include <SDL_events.h>
-#include "Player.h"
 
 Player::Player() : _currentGunIndex(-1) {
 

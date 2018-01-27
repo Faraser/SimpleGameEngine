@@ -1,7 +1,7 @@
 #pragma once
 
-#include "OpenGL/OpenGL.h"
-#include "string"
+#include <OpenGL/OpenGL.h>
+#include <string>
 
 namespace Engine {
 class GLSLprogram {

@@ -1,4 +1,5 @@
-#include "SDL2/SDL.h"
+#include <SDL2/SDL.h>
+
 #include "Engine.h"
 #include "EngineErrors.h"
 

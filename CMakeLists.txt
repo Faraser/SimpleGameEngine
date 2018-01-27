@@ -7,6 +7,7 @@ set(SOURCE_FILES main.cpp ZombieGame/MainGame.cpp ZombieGame/MainGame.h Engine/S
 add_executable(SimpleGameEngine ${SOURCE_FILES})
 
 include_directories(/usr/local/include)
+include_directories(.)
 
 link_directories(/usr/local/lib)
 

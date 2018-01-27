@@ -2,9 +2,9 @@
 
 #include <glm/glm.hpp>
 #include <vector>
-#include "string"
+#include <string>
 
-#include "../Engine/SpriteBatch.h"
+#include "Engine/SpriteBatch.h"
 
 class Agent;
 class Human;

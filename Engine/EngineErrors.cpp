@@ -1,8 +1,7 @@
 #include "EngineErrors.h"
-#include "string"
-#include "SDL2/SDL.h"
-#include "iostream"
-#include "stdlib.h"
+
+#include <SDL2/SDL.h>
+#include <iostream>
 
 namespace Engine {
 void fatalError(std::string errorMsg) {

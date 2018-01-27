@@ -2,7 +2,7 @@
 #include "picoPNG.h"
 #include "IOManager.h"
 #include "EngineErrors.h"
-#include "OpenGL/gl3.h"
+#include <OpenGL/gl3.h>
 
 namespace Engine {
 GLTexture ImageLoader::loadPNG(const std::string& filePath) {

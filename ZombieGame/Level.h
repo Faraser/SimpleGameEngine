@@ -1,10 +1,10 @@
 #pragma once
 
-#include "string"
-#include "vector"
-#include "glm/glm.hpp"
+#include <string>
+#include <vector>
+#include <glm/glm.hpp>
 
-#include "../Engine/SpriteBatch.h"
+#include "Engine/SpriteBatch.h"
 
 const int TILE_WIDTH = 64;
 

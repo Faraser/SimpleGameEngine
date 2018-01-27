@@ -1,8 +1,9 @@
 #pragma once
 
-#include "glm/glm.hpp"
-#include "../Engine/SpriteBatch.h"
-#include "../Engine/Vertex.h"
+#include <glm/glm.hpp>
+
+#include "Engine/SpriteBatch.h"
+#include "Engine/Vertex.h"
 
 const float AGENT_WIDTH = 60.0f;
 const float AGENT_RADIUS = AGENT_WIDTH / 2.0f;

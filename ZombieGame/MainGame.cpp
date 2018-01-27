@@ -1,19 +1,15 @@
 #include "MainGame.h"
-#include "SDL2/SDL.h"
-#include "OpenGL/gl3.h"
+
 #include <iostream>
 #include <random>
-#include <ctime>
+#include <glm/gtx/rotate_vector.hpp>
 
-#include "../Engine/Engine.h"
-#include "../Engine/Timing.h"
-#include "../Engine/EngineErrors.h"
-#include "../Engine/ResourceManager.h"
-
-#include "glm/gtx/rotate_vector.hpp"
+#include "Engine/Engine.h"
+#include "Engine/Timing.h"
+#include "Engine/EngineErrors.h"
+#include "Engine/ResourceManager.h"
 
 #include "Zombie.h"
-#include "Gun.h"
 
 const float HUMAN_SPEED = 1.0f;
 const float ZOMBIE_SPEED = 1.3f;

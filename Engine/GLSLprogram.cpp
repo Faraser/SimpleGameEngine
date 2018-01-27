@@ -1,9 +1,11 @@
 #include "GLSLprogram.h"
+
+#include <vector>
+#include <fstream>
+#include <iostream>
+#include <OpenGL/gl3.h>
+
 #include "EngineErrors.h"
-#include "vector"
-#include "fstream"
-#include "iostream"
-#include "OpenGL/gl3.h"
 
 namespace Engine {
 GLSLprogram::GLSLprogram() :

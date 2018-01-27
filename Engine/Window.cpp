@@ -1,6 +1,8 @@
 #include "Window.h"
+
+#include <OpenGL/gl3.h>
+
 #include "EngineErrors.h"
-#include "OpenGL/gl3.h"
 
 namespace Engine {
 Window::Window() {

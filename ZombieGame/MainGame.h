@@ -1,14 +1,14 @@
 #pragma once
 
-#include "../Engine/GLSLprogram.h"
-#include "../Engine/Window.h"
-#include "../Engine/Camera2D.h"
-#include "../Engine/InputManager.h"
-#include "../Engine/SpriteBatch.h"
-#include "../Engine/SpriteFont.h"
-#include "../Engine/AudioEngine.h"
-#include "../Engine/ParticleEngine2D.h"
-#include "../Engine/ParticleBatch2D.h"
+#include "Engine/GLSLprogram.h"
+#include "Engine/Window.h"
+#include "Engine/Camera2D.h"
+#include "Engine/InputManager.h"
+#include "Engine/SpriteBatch.h"
+#include "Engine/SpriteFont.h"
+#include "Engine/AudioEngine.h"
+#include "Engine/ParticleEngine2D.h"
+#include "Engine/ParticleBatch2D.h"
 
 #include "Level.h"
 #include "Player.h"

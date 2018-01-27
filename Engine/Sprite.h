@@ -1,8 +1,9 @@
 #pragma once
 
-#include "OpenGL/OpenGL.h"
+#include <OpenGL/OpenGL.h>
+#include <string>
+
 #include "GLTexture.h"
-#include "string"
 
 namespace Engine {
 class Sprite {

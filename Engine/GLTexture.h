@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OpenGL/OpenGL.h"
+#include <OpenGL/OpenGL.h>
 
 namespace Engine {
 struct GLTexture {

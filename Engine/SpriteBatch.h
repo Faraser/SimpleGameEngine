@@ -1,9 +1,10 @@
 #pragma once
 
-#include "OpenGL/gl3.h"
+#include <OpenGL/gl3.h>
+#include <glm/glm.hpp>
+#include <vector>
+
 #include "Vertex.h"
-#include "glm/glm.hpp"
-#include "vector"
 
 namespace Engine {
 

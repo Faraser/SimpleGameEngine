@@ -1,9 +1,9 @@
 #include "Sprite.h"
-#include "Vertex.h"
-#include "cstddef"
-#include "string"
+
+#include <OpenGL/gl3.h>
+
 #include "ResourceManager.h"
-#include "OpenGL/gl3.h"
+#include "Vertex.h"
 
 namespace Engine {
 Sprite::Sprite() {

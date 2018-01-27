@@ -1,5 +1,4 @@
 #include "SpriteBatch.h"
-#include "algorithm"
 
 namespace Engine {
 
@@ -86,6 +85,8 @@ void SpriteBatch::sortGlyphs() {
             break;
         case GlyphSortType::TEXTURE:
             std::stable_sort(_glyphsPointers.begin(), _glyphsPointers.end(), compareTexture);
+            break;
+        case GlyphSortType::NONE:
             break;
     }
 }

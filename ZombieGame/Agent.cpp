@@ -1,9 +1,8 @@
 #include "Agent.h"
 
-#include "../Engine/ResourceManager.h"
+#include "Engine/ResourceManager.h"
 
 #include "Level.h"
-#include <algorithm>
 
 Agent::Agent() {
 

@@ -1,7 +1,6 @@
 #include "ParticleEngine2D.h"
 
 #include "ParticleBatch2D.h"
-#include "SpriteBatch.h"
 
 namespace Engine {
 
