@@ -21,7 +21,7 @@ void Agent::draw(Engine::SpriteBatch& spriteBatch) {
     destRect.z = AGENT_WIDTH;
     destRect.w = AGENT_WIDTH;
 
-    spriteBatch.draw(destRect, uvRect, _textureId, 0.0f, _color);
+    spriteBatch.draw(destRect, uvRect, _textureId, 0.0f, _color, _direction);
 }
 
 bool Agent::collideWithLevel(const std::vector<std::string>& levelData) {

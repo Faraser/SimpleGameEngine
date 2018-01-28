@@ -47,6 +47,7 @@ protected:
     void collideWithTile(glm::vec2 tilePos);
 
     glm::vec2 _position;
+    glm::vec2 _direction = glm::vec2(1.0f, 0.0f);
     Engine::ColorRGBA8 _color;
     float _speed;
     float _health;

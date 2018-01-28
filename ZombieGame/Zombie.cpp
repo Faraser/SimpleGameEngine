@@ -19,8 +19,8 @@ void Zombie::update(
 ) {
     Human* closestHuman = getNearestHuman(humans);
     if (closestHuman != nullptr) {
-        glm::vec2 direction = glm::normalize(closestHuman->getPosition() - _position);
-        _position += direction * _speed * deltaTime;
+        _direction = glm::normalize(closestHuman->getPosition() - _position);
+        _position += _direction * _speed * deltaTime;
     }
 
     collideWithLevel(levelData);
