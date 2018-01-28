@@ -48,7 +48,7 @@ void MainGame::run() {
 
     initLevel();
 
-    Engine::Music music = _audioEngine.loadMusic("Audio/Music/XYZ_0.ogg");
+    Engine::Music music = _audioEngine.loadMusic("ZombieGame/Audio/Music/XYZ_0.ogg");
     music.play(-1);
 
     gameLoop();
@@ -69,7 +69,7 @@ void MainGame::initSystems() {
     _hudSpriteBatch.init();
 
     // Initialize SpriteFont
-    _spriteFont = new Engine::SpriteFont("Fonts/chintzy.ttf", 32);
+    _spriteFont = new Engine::SpriteFont("ZombieGame/Fonts/chintzy.ttf", 32);
 
     _camera.init(_screenWidth, _screenHeight);
     _camera.setScale(0.33f);
@@ -79,7 +79,7 @@ void MainGame::initSystems() {
 
     // Initialize particles
     _bloodParticleBatch = new Engine::ParticleBatch2D();
-    _bloodParticleBatch->init(1000, 0.05f, Engine::ResourceManager::getTexture("Textures/particle.png"),
+    _bloodParticleBatch->init(1000, 0.05f, Engine::ResourceManager::getTexture("ZombieGame/Textures/particle.png"),
                               [](Engine::Particle2D& p, float deltaTime) {
                                   p.position += p.velocity * deltaTime;
                                   p.color.a = static_cast<GLubyte>(p.life * 255.0f);
@@ -88,8 +88,8 @@ void MainGame::initSystems() {
 }
 
 void MainGame::initShaders() {
-    _textureProgram.compileShaders("Shaders/colorShading.vert",
-                                   "Shaders/colorShading.frag");
+    _textureProgram.compileShaders("ZombieGame/Shaders/colorShading.vert",
+                                   "ZombieGame/Shaders/colorShading.frag");
     _textureProgram.addAttribute("vertexPosition");
     _textureProgram.addAttribute("vertexColor");
     _textureProgram.addAttribute("vertexUV");
@@ -97,7 +97,7 @@ void MainGame::initShaders() {
 }
 
 void MainGame::initLevel() {
-    _levels.push_back(new Level("Levels/level1.txt"));
+    _levels.push_back(new Level("ZombieGame/Levels/level1.txt"));
     _currentLevel = 0;
 
     // Add the player
@@ -130,13 +130,13 @@ void MainGame::initLevel() {
     const float BULLET_SPEED = 7.0f;
 
     _player->addGun(new Gun("Magnum", 30, 1, glm::radians(10.0f), 30, BULLET_SPEED,
-                            _audioEngine.loadSoundEffect("Audio/Effect/gunshot.wav"))
+                            _audioEngine.loadSoundEffect("ZombieGame/Audio/Effect/gunshot.wav"))
     );
     _player->addGun(new Gun("Shotgun", 60, 20, glm::radians(40.0f), 4, BULLET_SPEED,
-                            _audioEngine.loadSoundEffect("Audio/Effect/shotgun.wav"))
+                            _audioEngine.loadSoundEffect("ZombieGame/Audio/Effect/shotgun.wav"))
     );
     _player->addGun(new Gun("MP5", 5, 1, glm::radians(20.0f), 20, BULLET_SPEED,
-                            _audioEngine.loadSoundEffect("Audio/Effect/rifle.wav"))
+                            _audioEngine.loadSoundEffect("ZombieGame/Audio/Effect/rifle.wav"))
     );
 }
 

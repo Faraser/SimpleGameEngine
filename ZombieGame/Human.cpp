@@ -46,7 +46,7 @@ void Human::init(float speed, glm::vec2 position) {
     _speed = speed;
     _position = position;
     _health = 20;
-    _textureId = Engine::ResourceManager::getTexture("Textures/human.png").id;
+    _textureId = Engine::ResourceManager::getTexture("ZombieGame/Textures/human.png").id;
 
     // Get random direction
     _direction = glm::vec2(randDir(randomEngine), randDir(randomEngine));

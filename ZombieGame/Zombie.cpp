@@ -31,7 +31,7 @@ void Zombie::init(float speed, glm::vec2 position) {
     _position = position;
     _color = {255, 255, 255, 255};
     _health = 150;
-    _textureId = Engine::ResourceManager::getTexture("Textures/zombie.png").id;
+    _textureId = Engine::ResourceManager::getTexture("ZombieGame/Textures/zombie.png").id;
 }
 
 Human* Zombie::getNearestHuman(std::vector<Human*>& humans) {
