@@ -3,6 +3,8 @@
 #include <SDL_keycode.h>
 #include <SDL_events.h>
 
+#include "Engine/ResourceManager.h"
+
 Player::Player() : _currentGunIndex(-1) {
 
 }
@@ -15,11 +17,12 @@ void Player::init(float speed, glm::vec2 position, Engine::InputManager* inputMa
                   std::vector<Bullet>* bullets) {
     _speed = speed;
     _position = position;
-    _color = {0, 0, 185, 255};
+    _color = {255, 255, 255, 255};
     _health = 150;
     _inputManager = inputManager;
     _camera = camera,
-    _bullets = bullets;
+    _bullets = bullets,
+    _textureId = Engine::ResourceManager::getTexture("Textures/player.png").id;
 }
 
 void Player::update(

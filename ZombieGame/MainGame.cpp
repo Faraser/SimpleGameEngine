@@ -72,7 +72,7 @@ void MainGame::initSystems() {
     _spriteFont = new Engine::SpriteFont("Fonts/chintzy.ttf", 32);
 
     _camera.init(_screenWidth, _screenHeight);
-    _camera.setScale(0.25f);
+    _camera.setScale(0.33f);
 
     _hudCamera.init(_screenWidth, _screenHeight);
     _hudCamera.setPosition(glm::vec2(_screenWidth / 2.0f, _screenHeight / 2.0f));

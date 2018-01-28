@@ -3,6 +3,8 @@
 #include <ctime>
 #include <glm/gtx/rotate_vector.hpp>
 
+#include "Engine/ResourceManager.h"
+
 Human::Human() :
     _frames(0)
 {
@@ -40,10 +42,11 @@ void Human::init(float speed, glm::vec2 position) {
     static std::mt19937 randomEngine(time(nullptr));
     static std::uniform_real_distribution<float> randDir(-0.1f, 0.1f);
 
-    _color = { 200, 0, 200, 255 };
+    _color = { 255, 255, 255, 255 };
     _speed = speed;
     _position = position;
     _health = 20;
+    _textureId = Engine::ResourceManager::getTexture("Textures/human.png").id;
 
     // Get random direction
     _direction = glm::vec2(randDir(randomEngine), randDir(randomEngine));
