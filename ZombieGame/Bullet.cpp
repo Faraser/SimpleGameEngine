@@ -29,7 +29,7 @@ void Bullet::draw(Engine::SpriteBatch& spriteBatch) {
 
     Engine::ColorRGBA8 color = {0, 0, 0, 255};
 
-    spriteBatch.draw(destRect, uvRect, Engine::ResourceManager::getTexture("ZombieGame/Textures/circle.png").id, 0.0f, color);
+    spriteBatch.draw(destRect, uvRect, Engine::ResourceManager::getTexture("Textures/circle.png").id, 0.0f, color);
 }
 
 bool Bullet::collideWithAgent(Agent* agent) {

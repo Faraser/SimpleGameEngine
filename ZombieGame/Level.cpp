@@ -48,7 +48,7 @@ Level::Level(const std::string& fileName) {
                     _spriteBatch.draw(
                             destRect,
                             uvRect,
-                            Engine::ResourceManager::getTexture("ZombieGame/Textures/red_bricks.png").id,
+                            Engine::ResourceManager::getTexture("Textures/red_bricks.png").id,
                             0.0f,
                             whiteColor
                     );
@@ -57,7 +57,7 @@ Level::Level(const std::string& fileName) {
                     _spriteBatch.draw(
                             destRect,
                             uvRect,
-                            Engine::ResourceManager::getTexture("ZombieGame/Textures/glass.png").id,
+                            Engine::ResourceManager::getTexture("Textures/glass.png").id,
                             0.0f,
                             whiteColor
                     );
@@ -66,7 +66,7 @@ Level::Level(const std::string& fileName) {
                     _spriteBatch.draw(
                             destRect,
                             uvRect,
-                            Engine::ResourceManager::getTexture("ZombieGame/Textures/light_bricks.png").id,
+                            Engine::ResourceManager::getTexture("Textures/light_bricks.png").id,
                             0.0f,
                             whiteColor
                     );

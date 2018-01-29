@@ -22,7 +22,7 @@ void Player::init(float speed, glm::vec2 position, Engine::InputManager* inputMa
     _inputManager = inputManager;
     _camera = camera,
     _bullets = bullets,
-    _textureId = Engine::ResourceManager::getTexture("ZombieGame/Textures/player.png").id;
+    _textureId = Engine::ResourceManager::getTexture("Textures/player.png").id;
 }
 
 void Player::update(

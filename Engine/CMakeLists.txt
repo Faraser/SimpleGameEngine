@@ -44,12 +44,9 @@ set(SOURCE_FILES
         ParticleBatch2D.cpp
         ParticleBatch2D.h)
 
-#add_executable(SimpleGameEngine ${SOURCE_FILES})
-
 add_library(Engine STATIC ${SOURCE_FILES})
 
 include_directories(/usr/local/include)
-include_directories(.)
 
 link_directories(/usr/local/lib)
 
