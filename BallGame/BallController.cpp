@@ -53,6 +53,12 @@ void BallController::updateBalls(std::vector<Ball>& balls, float deltaTime, int 
                 ball.velocity.y *= -1;
             }
         }
+
+        for (size_t i = 0; i < balls.size(); i++) {
+            for (size_t j = i + 1; j < balls.size(); j++) {
+                checkCollision(balls[i], balls[j]);
+            }
+        }
     }
 
     // Update our grabbed ball

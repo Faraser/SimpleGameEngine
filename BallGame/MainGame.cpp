@@ -52,8 +52,8 @@ void MainGame::run() {
 void MainGame::init() {
     Engine::init();
 
-    m_screenWidth = 1920;
-    m_screenHeight = 1080;
+    m_screenWidth = 1024;
+    m_screenHeight = 768;
 
     m_window.create("Ball Game", m_screenWidth, m_screenHeight, 0);
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -96,7 +96,7 @@ struct BallSpawn {
 };
 
 void MainGame::initBalls() {
-    const int NUM_BALLS = 100;
+    const int NUM_BALLS = 30;
 
     std::mt19937 randomEngine(static_cast<unsigned int>(time(nullptr)));
     std::uniform_real_distribution<float> randX(0.0f, static_cast<float>(m_screenWidth));
@@ -104,17 +104,16 @@ void MainGame::initBalls() {
     std::uniform_real_distribution<float> randDir(-1.0f, 1.0f);
 
     // Add all possible balls
-
     std::vector<BallSpawn> possibleBalls;
     float totalProbability = 0.0f;
 
-    possibleBalls.emplace_back(Engine::ColorRGBA8(255, 255, 255, 255), 20.0f, 1.0f, 0.1f, 7.0f, totalProbability);
-    totalProbability += 20.0f;
+    possibleBalls.emplace_back(Engine::ColorRGBA8(255, 255, 255, 255), 10.0f, 1.0f, 0.1f, 7.0f, totalProbability);
+    totalProbability += 1.0f;
 
-    possibleBalls.emplace_back(Engine::ColorRGBA8(0, 0, 255, 255), 30.0f, 2.0f, 0.1f, 3.0f, totalProbability);
-    totalProbability += 10.0f;
+    possibleBalls.emplace_back(Engine::ColorRGBA8(0, 0, 255, 255), 20.0f, 2.0f, 0.1f, 3.0f, totalProbability);
+    totalProbability += 5.0f;
 
-    possibleBalls.emplace_back(Engine::ColorRGBA8(255, 0, 0, 255), 50.0f, 4.0f, 0.0f, 0.0f, totalProbability);
+    possibleBalls.emplace_back(Engine::ColorRGBA8(255, 0, 0, 255), 30.0f, 4.0f, 0.0f, 0.0f, totalProbability);
     totalProbability += 1.0f;
 
     // Random probability for ball spawn
@@ -222,7 +221,7 @@ void MainGame::processInput() {
         }
     }
 
-    if (m_inputManager.isKeyPressed(SDLK_LEFT)) {
+    if (m_inputManager.isKeyPressed(SDLK_ESCAPE)) {
         m_gameState = GameState::EXIT;
     }
 
