@@ -22,9 +22,9 @@ public:
 private:
     void checkCollision(Ball& b1, Ball& b2);
 
-    bool isMouseOnBall(Ball&b, float mouseX, float mouseY);
+    bool isMouseOnBall(Ball&b, float mouseX, float mouseY) const;
 
-    glm::vec2 getGravityAccel();
+    glm::vec2 getGravityAccel() const;
 
     int m_grabbedBall = -1;
     glm::vec2 m_prevPos = glm::vec2(0.0f);
