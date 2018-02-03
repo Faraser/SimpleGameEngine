@@ -101,25 +101,32 @@ struct BallSpawn {
 void MainGame::initBalls() {
     m_grid = std::make_unique<Grid>(m_screenWidth, m_screenHeight, CELL_SIZE);
 
-    const int NUM_BALLS = 300;
+    const int NUM_BALLS = 1000;
 
     std::mt19937 randomEngine(static_cast<unsigned int>(time(nullptr)));
     std::uniform_real_distribution<float> randX(0.0f, static_cast<float>(m_screenWidth));
     std::uniform_real_distribution<float> randY(0.0f, static_cast<float>(m_screenHeight));
     std::uniform_real_distribution<float> randDir(-1.0f, 1.0f);
 
+    std::uniform_int_distribution<int> randColor(0, 255);
+    std::uniform_real_distribution<float> randRM(2.0f, 6.0f);
+
+
     // Add all possible balls
     std::vector<BallSpawn> possibleBalls;
     float totalProbability = 0.0f;
 
-    possibleBalls.emplace_back(Engine::ColorRGBA8(255, 255, 255, 255), 5.0f, 1.0f, 0.1f, 7.0f, totalProbability);
-    totalProbability += 2.0f;
+    auto addBall = [&](float probability, auto... args) {
+        totalProbability += probability;
+        possibleBalls.emplace_back(args...);
+    };
 
-    possibleBalls.emplace_back(Engine::ColorRGBA8(0, 0, 255, 255), 10.0f, 2.0f, 0.5f, 3.0f, totalProbability);
-    totalProbability += 3.0f;
+    for (int i = 0; i < 1000; i++) {
+        addBall(1.0f,
+                Engine::ColorRGBA8(randColor(randomEngine), randColor(randomEngine), randColor(randomEngine), 255),
+                randRM(randomEngine), randRM(randomEngine), 0.0f, 0.0f, totalProbability);
+    }
 
-    possibleBalls.emplace_back(Engine::ColorRGBA8(255, 0, 0, 255), 15.0f, 4.0f, 0.4f, 1.0f, totalProbability);
-    totalProbability += 5.0f;
 
     // Random probability for ball spawn
     std::uniform_real_distribution<float> spawn(0.0f, totalProbability);
@@ -127,14 +134,14 @@ void MainGame::initBalls() {
     m_balls.reserve(NUM_BALLS);
 
     // Set up ball to spawn with default value
-    BallSpawn& ballToSpawn = possibleBalls.front();
+    BallSpawn* ballToSpawn = &possibleBalls.front();
 
     for (int i = 0; i < NUM_BALLS; i++) {
         // Get the ball spawn roll
         float spawnVal = spawn(randomEngine);
         for (auto& possibleBall : possibleBalls) {
             if (spawnVal <= possibleBall.probability) {
-                ballToSpawn = possibleBall;
+                ballToSpawn = &possibleBall;
                 break;
             }
         }
@@ -151,14 +158,14 @@ void MainGame::initBalls() {
             direction = glm::vec2(1.0f, 0.0f); // default direction
         }
 
-
         // Add ball
-        m_balls.emplace_back(ballToSpawn.radius,
-                             ballToSpawn.mass,
+        m_balls.emplace_back(ballToSpawn->radius,
+                             ballToSpawn->mass,
                              pos,
-                             direction * ballToSpawn.randSpeed(randomEngine),
+                             direction * ballToSpawn->randSpeed(randomEngine),
                              Engine::ResourceManager::getTexture("Textures/circle.png").id,
-                             ballToSpawn.color);
+                             ballToSpawn->color);
+
         m_grid->addBall(&m_balls.back());
     }
 }
@@ -172,7 +179,7 @@ void MainGame::draw() {
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    glActiveTexture(GL_TEXTURE0);
+//    glActiveTexture(GL_TEXTURE0);
 
     // Grab the camera matrix
     glm::mat4 projectionMatrix = m_camera.getCameraMatrix();
@@ -181,14 +188,14 @@ void MainGame::draw() {
 
     m_textureProgram.use();
 
-    // Make sure the shader uses texture 0
-    GLint textureUniform = m_textureProgram.getUniformLocation("mySampler");
-    glUniform1i(textureUniform, 0);
-
-    GLint pUniform = m_textureProgram.getUniformLocation("P");
-    glUniformMatrix4fv(pUniform, 1, GL_FALSE, &projectionMatrix[0][0]);
-
-    m_textureProgram.unuse();
+//    // Make sure the shader uses texture 0
+//    GLint textureUniform = m_textureProgram.getUniformLocation("mySampler");
+//    glUniform1i(textureUniform, 0);
+//
+//    GLint pUniform = m_textureProgram.getUniformLocation("P");
+//    glUniformMatrix4fv(pUniform, 1, GL_FALSE, &projectionMatrix[0][0]);
+//
+//    m_textureProgram.unuse();
 
     m_window.swapBuffer();
 }
