@@ -1,6 +1,7 @@
 #include "BallController.h"
+#include "Grid.h"
 
-void BallController::updateBalls(std::vector<Ball>& balls, float deltaTime, int maxX, int maxY) {
+void BallController::updateBalls(std::vector<Ball>& balls, Grid* grid, float deltaTime, int maxX, int maxY) {
     const float FRICTION = 0.01f;
     // Update our grabbed balls velocity
     if (m_grabbedBall != -1) {
@@ -54,12 +55,23 @@ void BallController::updateBalls(std::vector<Ball>& balls, float deltaTime, int 
             }
         }
 
-        for (size_t i = 0; i < balls.size(); i++) {
-            for (size_t j = i + 1; j < balls.size(); j++) {
-                checkCollision(balls[i], balls[j]);
-            }
+        // Check to see if the ball moved
+        Cell* newCell = grid->getCell(ball.position);
+        if (newCell != ball.ownerCell) {
+            // Need to shift the ball
+            grid->removeBallFromCell(&balls[i]);
+            grid->addBall(&balls[i], newCell);
         }
     }
+
+    // Updates all collisions using the spatial partition
+    updateCollision(grid);
+
+//    for (size_t i = 0; i < balls.size(); i++) {
+//        for (size_t j = i + 1; j < balls.size(); j++) {
+//            checkCollision(balls[i], balls[j]);
+//        }
+//    }
 
     // Update our grabbed ball
     if (m_grabbedBall != -1) {
@@ -94,6 +106,45 @@ void BallController::onMouseMove(std::vector<Ball>& balls, float mouseX, float m
         balls[m_grabbedBall].position = glm::vec2(mouseX, mouseY) - m_grabOffset;
     }
 }
+
+void BallController::updateCollision(Grid* grid) {
+    for (int i = 0; i < grid->m_cells.size(); i++) {
+        int x = i % grid->m_numXCells;
+        int y = i / grid->m_numXCells;
+
+        Cell& cell = grid->m_cells[i];
+
+        for (int j = 0; j < cell.balls.size(); j++) {
+            Ball* ball = cell.balls[j];
+            // Update with the residing cell
+            checkCollision(ball, cell.balls, j + 1);
+            // Update collision with neighbor cells
+            if (x > 0) {
+                // Left
+                checkCollision(ball, grid->getCell(x - 1, y)->balls, 0);
+                if (y > 0) {
+                    // Top left
+                    checkCollision(ball, grid->getCell(x - 1, y - 1)->balls, 0);
+                }
+                if (y < grid->m_numYCells - 1) {
+                    // Bottom left
+                    checkCollision(ball, grid->getCell(x - 1, y + 1)->balls, 0);
+                }
+            }
+            // Up cell
+            if (y > 0) {
+                checkCollision(ball, grid->getCell(x, y - 1)->balls, 0);
+            }
+        }
+
+    }
+}
+
+void BallController::checkCollision(Ball* ball, std::vector<Ball*>& ballsToCheck, int startingIndex) {
+    for (int i = startingIndex; i < ballsToCheck.size(); i++) {
+        checkCollision(*ball, *ballsToCheck[i]);
+    }
+};
 
 void BallController::checkCollision(Ball& b1, Ball& b2) {
     // We add radius since position is the top left corner

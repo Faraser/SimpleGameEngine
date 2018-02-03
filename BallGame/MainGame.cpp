@@ -80,7 +80,10 @@ void MainGame::initRenderers() {
 }
 
 struct BallSpawn {
-    BallSpawn(const Engine::ColorRGBA8& color_, float radius_, float mass_, float minSpeed_, float maxSpeed_,
+    BallSpawn(const Engine::ColorRGBA8& color_,
+              float radius_,
+              float mass_,
+              float minSpeed_, float maxSpeed_,
               float probability_) :
             color(color_),
             radius(radius_),
@@ -96,7 +99,9 @@ struct BallSpawn {
 };
 
 void MainGame::initBalls() {
-    const int NUM_BALLS = 30;
+    m_grid = std::make_unique<Grid>(m_screenWidth, m_screenHeight, CELL_SIZE);
+
+    const int NUM_BALLS = 300;
 
     std::mt19937 randomEngine(static_cast<unsigned int>(time(nullptr)));
     std::uniform_real_distribution<float> randX(0.0f, static_cast<float>(m_screenWidth));
@@ -107,14 +112,14 @@ void MainGame::initBalls() {
     std::vector<BallSpawn> possibleBalls;
     float totalProbability = 0.0f;
 
-    possibleBalls.emplace_back(Engine::ColorRGBA8(255, 255, 255, 255), 10.0f, 1.0f, 0.1f, 7.0f, totalProbability);
-    totalProbability += 1.0f;
+    possibleBalls.emplace_back(Engine::ColorRGBA8(255, 255, 255, 255), 5.0f, 1.0f, 0.1f, 7.0f, totalProbability);
+    totalProbability += 2.0f;
 
-    possibleBalls.emplace_back(Engine::ColorRGBA8(0, 0, 255, 255), 20.0f, 2.0f, 0.1f, 3.0f, totalProbability);
+    possibleBalls.emplace_back(Engine::ColorRGBA8(0, 0, 255, 255), 10.0f, 2.0f, 0.5f, 3.0f, totalProbability);
+    totalProbability += 3.0f;
+
+    possibleBalls.emplace_back(Engine::ColorRGBA8(255, 0, 0, 255), 15.0f, 4.0f, 0.4f, 1.0f, totalProbability);
     totalProbability += 5.0f;
-
-    possibleBalls.emplace_back(Engine::ColorRGBA8(255, 0, 0, 255), 30.0f, 4.0f, 0.0f, 0.0f, totalProbability);
-    totalProbability += 1.0f;
 
     // Random probability for ball spawn
     std::uniform_real_distribution<float> spawn(0.0f, totalProbability);
@@ -154,11 +159,12 @@ void MainGame::initBalls() {
                              direction * ballToSpawn.randSpeed(randomEngine),
                              Engine::ResourceManager::getTexture("Textures/circle.png").id,
                              ballToSpawn.color);
+        m_grid->addBall(&m_balls.back());
     }
 }
 
 void MainGame::update(float deltaTime) {
-    m_ballController.updateBalls(m_balls, deltaTime, m_screenWidth, m_screenHeight);
+    m_ballController.updateBalls(m_balls, m_grid.get(), deltaTime, m_screenWidth, m_screenHeight);
 }
 
 void MainGame::draw() {

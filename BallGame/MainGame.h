@@ -11,10 +11,13 @@
 #include "Ball.h"
 #include "BallRenderer.h"
 #include "BallController.h"
+#include "Grid.h"
 
 enum class GameState {
     RUNNING, EXIT
 };
+
+const int CELL_SIZE = 32;
 
 class MainGame {
 public:
@@ -39,6 +42,7 @@ private:
     int m_screenHeight = 0;
 
     std::vector<Ball> m_balls;
+    std::unique_ptr<Grid> m_grid;
 
     int m_currentRenderer = 0;
     std::vector<std::unique_ptr<BallRenderer>> m_ballRenderers;

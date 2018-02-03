@@ -10,7 +10,7 @@ set(SOURCE_FILES
         MainGame.h
         Ball.cpp
         Ball.h
-        BallRenderer.cpp BallRenderer.h BallController.cpp BallController.h)
+        BallRenderer.cpp BallRenderer.h BallController.cpp BallController.h Grid.cpp Grid.h)
 
 add_executable(BallGame ${SOURCE_FILES})
 

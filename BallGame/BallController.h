@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "Ball.h"
+#include "Grid.h"
 
 enum class GravityDirection {
     NONE, LEFT, UP, RIGHT, DOWN
@@ -9,7 +10,7 @@ enum class GravityDirection {
 
 class BallController {
 public:
-    void updateBalls(std::vector<Ball>& balls, float deltaTime, int maxX, int maxY);
+    void updateBalls(std::vector<Ball>& balls, Grid* grid, float deltaTime, int maxX, int maxY);
 
     void onMouseDown(std::vector<Ball>& balls, float mouseX, float mouseY);
 
@@ -20,9 +21,13 @@ public:
     void setGravityDirection(GravityDirection dir) { m_gravityDirection = dir; };
 
 private:
+    void updateCollision(Grid* grid);
+
+    void checkCollision(Ball* ball, std::vector<Ball*>& ballsToCheck, int startingIndex);
+
     void checkCollision(Ball& b1, Ball& b2);
 
-    bool isMouseOnBall(Ball&b, float mouseX, float mouseY) const;
+    bool isMouseOnBall(Ball& b, float mouseX, float mouseY) const;
 
     glm::vec2 getGravityAccel() const;
 
