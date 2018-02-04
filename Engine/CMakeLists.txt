@@ -42,7 +42,12 @@ set(SOURCE_FILES
         ParticleEngine2D.cpp
         ParticleEngine2D.h
         ParticleBatch2D.cpp
-        ParticleBatch2D.h)
+        ParticleBatch2D.h
+        IGameScreen.h
+        IMainGame.cpp
+        IMainGame.h
+        ScreenList.cpp
+        ScreenList.h)
 
 add_library(Engine STATIC ${SOURCE_FILES})
 
