@@ -79,6 +79,7 @@ void MainGame::initRenderers() {
     m_ballRenderers.push_back(std::make_unique<BallRenderer>());
     m_ballRenderers.push_back(std::make_unique<MomentumBallRenderer>());
     m_ballRenderers.push_back(std::make_unique<VelocityBallRenderer>(m_screenWidth, m_screenHeight));
+    m_ballRenderers.push_back(std::make_unique<TrippyBallRenderer>(m_screenWidth, m_screenHeight));
 }
 
 struct BallSpawn {
@@ -181,23 +182,12 @@ void MainGame::draw() {
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-//    glActiveTexture(GL_TEXTURE0);
-
     // Grab the camera matrix
     glm::mat4 projectionMatrix = m_camera.getCameraMatrix();
 
     m_ballRenderers[m_currentRenderer]->renderBalls(m_spriteBatch, m_balls, projectionMatrix);
 
     m_textureProgram.use();
-
-//    // Make sure the shader uses texture 0
-//    GLint textureUniform = m_textureProgram.getUniformLocation("mySampler");
-//    glUniform1i(textureUniform, 0);
-//
-//    GLint pUniform = m_textureProgram.getUniformLocation("P");
-//    glUniformMatrix4fv(pUniform, 1, GL_FALSE, &projectionMatrix[0][0]);
-//
-//    m_textureProgram.unuse();
 
     m_window.swapBuffer();
 }
