@@ -12,7 +12,7 @@ Grid::Grid(int width, int height, int cellSize) :
     // Allocate all the cells
     const int BALLS_TO_RESERVE = 20;
     m_cells.resize(m_numYCells * m_numXCells);
-    for (int i=0; i<m_cells.size(); i++) {
+    for (int i = 0; i < m_cells.size(); i++) {
         m_cells[i].balls.reserve(BALLS_TO_RESERVE);
     }
 }
@@ -23,12 +23,11 @@ Grid::~Grid() {
 
 Cell* Grid::getCell(int x, int y) {
     if (x < 0) { x = 0; }
-    if (x >= m_numXCells) { x = m_numXCells; }
+    if (x >= m_numXCells) { x = m_numXCells - 1; }
     if (y < 0) { y = 0; }
-    if (y >= m_numYCells) { y = m_numYCells; }
+    if (y >= m_numYCells) { y = m_numYCells - 1; }
 
     return &m_cells[y * m_numXCells + x];
-//    return m_cells[x * (m_numXCells - 1) + y];
 }
 
 Cell* Grid::getCell(const glm::vec2& pos) {

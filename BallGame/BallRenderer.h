@@ -8,9 +8,30 @@
 
 class BallRenderer {
 public:
-    void renderBalls(Engine::SpriteBatch& spriteBatch, const std::vector<Ball> & balls, const glm::mat4& projectionMatrix);
-private:
+    virtual void renderBalls(Engine::SpriteBatch& spriteBatch,
+                             const std::vector<Ball> & balls,
+                             const glm::mat4& projectionMatrix);
+protected:
     std::unique_ptr<Engine::GLSLprogram> m_program = nullptr;
 };
 
+class MomentumBallRenderer : public BallRenderer {
+public:
+    virtual void renderBalls(Engine::SpriteBatch& spriteBatch,
+                             const std::vector<Ball> & balls,
+                             const glm::mat4& projectionMatrix) override;
+
+};
+
+class VelocityBallRenderer : public BallRenderer {
+public:
+    VelocityBallRenderer(int screenWidth, int screenHeight);
+    virtual void renderBalls(Engine::SpriteBatch& spriteBatch,
+                             const std::vector<Ball> & balls,
+                             const glm::mat4& projectionMatrix) override;
+private:
+    int m_screenWidth;
+    int m_screenHeight;
+
+};
 
