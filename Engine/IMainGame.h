@@ -20,8 +20,9 @@ public:
     virtual void addScreens() = 0;
     virtual void onExit() = 0;
 
-
     const float getFps() const { return m_fps; }
+
+    void onSDLEvent(SDL_Event& event);
 
 protected:
     // Custom update function
@@ -29,7 +30,6 @@ protected:
     // Custom render function
     virtual void draw();
 
-    void onSDLEvent(SDL_Event& event);
 
     bool init();
     bool initSystems();

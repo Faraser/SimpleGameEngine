@@ -6,4 +6,5 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_subdirectory(ZombieGame)
 add_subdirectory(BallGame)
+add_subdirectory(NinjaPlatformer)
 add_subdirectory(Engine)

@@ -5,7 +5,9 @@
 
 namespace Engine {
 
-IMainGame::IMainGame() {}
+IMainGame::IMainGame() {
+    m_screenList = std::make_unique<ScreenList>(this);
+}
 
 IMainGame::~IMainGame() {}
 
@@ -24,6 +26,7 @@ void IMainGame::run() {
         draw();
 
         m_fps = limiter.end();
+        m_window.swapBuffer();
     }
 }
 
@@ -92,7 +95,7 @@ void IMainGame::update() {
 }
 
 void IMainGame::draw() {
-    glViewport(0, 0, m_window.getScreenWidth(), m_window.getScreenHeight());
+//    glViewport(0, 0, m_window.getScreenWidth(), m_window.getScreenHeight());
     if (m_currentScreen && m_currentScreen->getState() == ScreenState::RUNNING) {
         m_currentScreen->draw();
     }

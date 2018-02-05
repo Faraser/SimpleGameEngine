@@ -9,6 +9,7 @@ class IMainGame;
 
 class IGameScreen {
 public:
+    friend class ScreenList;
 
     // Called at beginning and end of application
     virtual void build() = 0;
@@ -29,7 +30,7 @@ public:
 
     // Return the index of the next of previous screen when changing screens
     virtual int getNextScreenIndex() const = 0;
-    virtual int getPreviosScreenIndex() const = 0;
+    virtual int getPreviousScreenIndex() const = 0;
 
     void setParentGame(IMainGame* game) { m_game = game; };
 
