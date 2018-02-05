@@ -19,7 +19,7 @@ IGameScreen* ScreenList::moveNext() {
 IGameScreen* ScreenList::movePrevious() {
     IGameScreen* currentScreen = getCurrent();
     if (currentScreen->getPreviosScreenIndex() != -1) {
-        m_currentScreenIndex = currentScreen->getPrevousScreenIndex();
+        m_currentScreenIndex = currentScreen->getPreviosScreenIndex();
     }
     return getCurrent();
 }
@@ -42,7 +42,6 @@ void ScreenList::addScreen(IGameScreen* newScreen) {
 void ScreenList::destroy() {
     for (size_t i=0; i<m_screens.size(); i++) {
         m_screens[i]->destroy();
-        delete m_screens[i];
     }
     m_screens.resize(0);
     m_currentScreenIndex = -1;

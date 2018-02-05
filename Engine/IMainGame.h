@@ -4,6 +4,7 @@
 #include "ScreenList.h"
 #include "IGameScreen.h"
 #include "Window.h"
+#include "InputManager.h"
 
 namespace Engine {
 
@@ -16,15 +17,20 @@ public:
     void exitGame();
 
     virtual void onInit() = 0;
-    virtual void addScreen() = 0;
+    virtual void addScreens() = 0;
     virtual void onExit() = 0;
 
-    virtual void update() = 0;
-    virtual void draw() = 0;
 
     const float getFps() const { return m_fps; }
 
 protected:
+    // Custom update function
+    virtual void update();
+    // Custom render function
+    virtual void draw();
+
+    void onSDLEvent(SDL_Event& event);
+
     bool init();
     bool initSystems();
 
@@ -33,6 +39,7 @@ protected:
     bool m_isRunning = false;
     float m_fps = 0.0f;
     Window m_window;
+    InputManager m_inputManager;
 };
 
 }

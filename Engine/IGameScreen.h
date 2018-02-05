@@ -24,11 +24,14 @@ public:
 
     int getScreenIndex() const { return m_screenIndex; }
 
+    ScreenState getState() const { return m_currentState; }
+    void setRunning() { m_currentState = ScreenState::RUNNING; }
+
     // Return the index of the next of previous screen when changing screens
     virtual int getNextScreenIndex() const = 0;
     virtual int getPreviosScreenIndex() const = 0;
 
-    void setParentGame(IMainGame* game) { m_game = game };
+    void setParentGame(IMainGame* game) { m_game = game; };
 
 protected:
     ScreenState m_currentState = ScreenState::NONE;

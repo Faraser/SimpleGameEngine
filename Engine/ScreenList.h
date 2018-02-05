@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include "IGameScreen.h"
 
 namespace Engine {
 
