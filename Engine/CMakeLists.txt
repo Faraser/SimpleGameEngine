@@ -61,4 +61,9 @@ include_directories(${SDL2_INCLUDE_DIRS})
 find_package(OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR})
 
-target_link_libraries(Engine ${SDL2_LIBRARIES} ${OPENGL_gl_LIBRARY} -L/usr/local/Cellar/sdl2_ttf/2.0.14/lib -lSDL2_ttf -L/usr/local/Cellar/sdl2_mixer/2.0.1_1/lib -lSDL2_mixer)
+target_link_libraries(Engine
+        ${SDL2_LIBRARIES}
+        ${OPENGL_gl_LIBRARY}
+        -L/usr/local/Cellar/sdl2_ttf/2.0.14/lib -lSDL2_ttf
+        -L/usr/local/Cellar/sdl2_mixer/2.0.1_1/lib -lSDL2_mixer
+        )
