@@ -36,6 +36,9 @@ void GameplayScreen::onEntry() {
     groundBox.SetAsBox(50.0f, 0.0f);
     groundBody->CreateFixture(&groundBox, 0.0f);
 
+    // Load the texture
+    m_texture = Engine::ResourceManager::getTexture("Assets/bricks_top.png");
+
     // Make a bunch of boxes
     std::mt19937 randGenerator;
     std::uniform_real_distribution<float> xPos(-10.0f, 10.0f);
@@ -49,7 +52,8 @@ void GameplayScreen::onEntry() {
         Engine::ColorRGBA8 randColor(color(randGenerator), color(randGenerator), color(randGenerator), 255);
         float s = size(randGenerator);
         Box newBox;
-        newBox.init(m_world.get(), glm::vec2(xPos(randGenerator), yPos(randGenerator)), glm::vec2(s, s), randColor);
+        newBox.init(m_world.get(), glm::vec2(xPos(randGenerator), yPos(randGenerator)), glm::vec2(s, s), m_texture,
+                    randColor, false);
         m_boxes.push_back(newBox);
     }
 
@@ -58,7 +62,6 @@ void GameplayScreen::onEntry() {
     m_spriteBatch.init();
 
     // Shader initialize
-
     m_textureProgram.compileShaders("Shaders/colorShading.vert",
                                     "Shaders/colorShading.frag");
     m_textureProgram.addAttribute("vertexPosition");
@@ -66,12 +69,13 @@ void GameplayScreen::onEntry() {
     m_textureProgram.addAttribute("vertexUV");
     m_textureProgram.linkShaders();
 
-    // Load the texture
-    m_texture = Engine::ResourceManager::getTexture("Assets/bricks_top.png");
 
     // Init camera
     m_camera.init(m_window->getScreenWidth(), m_window->getScreenHeight());
     m_camera.setScale(32.0f);
+
+    // Init player
+    m_player.init(m_world.get(), glm::vec2(0.0f, 15.0f), glm::vec2(1.0f, 2.0f), m_texture, Engine::ColorRGBA8(255, 255, 255, 255));
 }
 
 void GameplayScreen::onExit() {
@@ -106,15 +110,10 @@ void GameplayScreen::draw() {
 
     // Draw all the boxes
     for (auto& b : m_boxes) {
-        glm::vec4 destRect;
-        destRect.x = b.getBody()->GetPosition().x - b.getDimensions().x / 2.0f;
-        destRect.y = b.getBody()->GetPosition().y - b.getDimensions().y / 2.0f;
-        destRect.z = b.getDimensions().x;
-        destRect.w = b.getDimensions().y;
-
-        m_spriteBatch.draw(destRect, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), m_texture.id, 0.0f,
-                           b.getColor(), b.getBody()->GetAngle());
+        b.draw(m_spriteBatch);
     }
+
+    m_player.draw(m_spriteBatch);
 
     m_spriteBatch.end();
     m_spriteBatch.renderBatch();

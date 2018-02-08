@@ -8,8 +8,10 @@
 #include <Engine/Window.h>
 
 #include <Box2D/Box2D.h>
-#include "Box.h"
 #include <vector>
+
+#include "Box.h"
+#include "Player.h"
 
 class GameplayScreen : public Engine::IGameScreen {
 
@@ -41,6 +43,8 @@ private:
     Engine::Camera2D m_camera;
     Engine::GLTexture m_texture;
     Engine::Window * m_window;
+
+    Player m_player;
 
     std::vector<Box> m_boxes;
     std::unique_ptr<b2World> m_world;

@@ -105,7 +105,7 @@ void IMainGame::onSDLEvent(SDL_Event& event) {
     while (SDL_PollEvent(&event)) {
         switch (event.type) {
             case SDL_QUIT:
-                m_isRunning = false;
+                exitGame();
                 break;
             case SDL_MOUSEMOTION:
                 m_inputManager.setMouseCoords(static_cast<float>(event.motion.x), static_cast<float>(event.motion.y));

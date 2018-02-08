@@ -3,6 +3,8 @@
 #include <Box2D/Box2D.h>
 #include <glm/glm.hpp>
 #include <Engine/Vertex.h>
+#include <Engine/GLTexture.h>
+#include <Engine/SpriteBatch.h>
 
 class Box {
 public:
@@ -10,7 +12,9 @@ public:
 
     ~Box();
 
-    void init(b2World* world, const glm::vec2& position, const glm::vec2& dimensions, Engine::ColorRGBA8 color);
+    void init(b2World* world, const glm::vec2& position, const glm::vec2& dimensions, Engine::GLTexture texture, Engine::ColorRGBA8 color, bool fixedRotation);
+
+    void draw(Engine::SpriteBatch & spriteBatch);
 
     b2Body* getBody() const { return m_body; }
 
@@ -25,6 +29,7 @@ private:
     b2Fixture* m_fixture = nullptr;
     glm::vec2 m_dimensions;
     Engine::ColorRGBA8 m_color;
+    Engine::GLTexture m_texture;
 };
 
 
