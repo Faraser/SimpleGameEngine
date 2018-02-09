@@ -9,7 +9,7 @@ public:
 
     ~Player();
 
-    void init(b2World * world, const glm::vec2& position, const glm::vec2& dimensions, Engine::GLTexture texture, Engine::ColorRGBA8 color);
+    void init(b2World * world, const glm::vec2& position, const glm::vec2& dimensions, Engine::ColorRGBA8 color);
 
     void draw(Engine::SpriteBatch & spriteBatch);
 

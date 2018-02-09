@@ -24,6 +24,8 @@ public:
 
     void onSDLEvent(SDL_Event& event);
 
+    InputManager inputManager;
+
 protected:
     // Custom update function
     virtual void update();
@@ -39,7 +41,6 @@ protected:
     bool m_isRunning = false;
     float m_fps = 0.0f;
     Window m_window;
-    InputManager m_inputManager;
 };
 
 }

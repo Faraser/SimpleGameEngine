@@ -21,7 +21,7 @@ void IMainGame::run() {
     while (m_isRunning)  {
         limiter.begin();
 
-        m_inputManager.update();
+        inputManager.update();
         update();
         draw();
 
@@ -95,7 +95,7 @@ void IMainGame::update() {
 }
 
 void IMainGame::draw() {
-//    glViewport(0, 0, m_window.getScreenWidth(), m_window.getScreenHeight());
+    glViewport(0, 0, m_window.getScreenWidth(), m_window.getScreenHeight());
     if (m_currentScreen && m_currentScreen->getState() == ScreenState::RUNNING) {
         m_currentScreen->draw();
     }
@@ -108,19 +108,19 @@ void IMainGame::onSDLEvent(SDL_Event& event) {
                 exitGame();
                 break;
             case SDL_MOUSEMOTION:
-                m_inputManager.setMouseCoords(static_cast<float>(event.motion.x), static_cast<float>(event.motion.y));
+                inputManager.setMouseCoords(static_cast<float>(event.motion.x), static_cast<float>(event.motion.y));
                 break;
             case SDL_KEYDOWN:
-                m_inputManager.pressKey(static_cast<unsigned int>(event.key.keysym.sym));
+                inputManager.pressKey(static_cast<unsigned int>(event.key.keysym.sym));
                 break;
             case SDL_KEYUP:
-                m_inputManager.releaseKey(static_cast<unsigned int>(event.key.keysym.sym));
+                inputManager.releaseKey(static_cast<unsigned int>(event.key.keysym.sym));
                 break;
             case SDL_MOUSEBUTTONDOWN:
-                m_inputManager.releaseKey(event.button.button);
+                inputManager.releaseKey(event.button.button);
                 break;
             case SDL_MOUSEBUTTONUP:
-                m_inputManager.releaseKey(event.button.button);
+                inputManager.releaseKey(event.button.button);
                 break;
         }
     }

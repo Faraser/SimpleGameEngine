@@ -12,9 +12,16 @@ public:
 
     ~Box();
 
-    void init(b2World* world, const glm::vec2& position, const glm::vec2& dimensions, Engine::GLTexture texture, Engine::ColorRGBA8 color, bool fixedRotation);
+    void init(b2World* world,
+              const glm::vec2& position,
+              const glm::vec2& dimensions,
+              Engine::GLTexture texture,
+              Engine::ColorRGBA8 color,
+              bool fixedRotation,
+              glm::vec4 uvRect = glm::vec4(0.0f, 0.0f, 1.0f, 1.0f)
+    );
 
-    void draw(Engine::SpriteBatch & spriteBatch);
+    void draw(Engine::SpriteBatch& spriteBatch);
 
     b2Body* getBody() const { return m_body; }
 
@@ -28,6 +35,7 @@ private:
     b2Body* m_body = nullptr;
     b2Fixture* m_fixture = nullptr;
     glm::vec2 m_dimensions;
+    glm::vec4 m_uvRect;
     Engine::ColorRGBA8 m_color;
     Engine::GLTexture m_texture;
 };

@@ -8,11 +8,17 @@ Box::~Box() {
 
 }
 
-void Box::init(b2World* world, const glm::vec2& position, const glm::vec2& dimensions, Engine::GLTexture texture, Engine::ColorRGBA8 color,
-               bool fixedRotation) {
+void Box::init(b2World* world,
+               const glm::vec2& position,
+               const glm::vec2& dimensions,
+               Engine::GLTexture texture,
+               Engine::ColorRGBA8 color,
+               bool fixedRotation,
+               glm::vec4 uvRect) {
     m_dimensions = dimensions;
     m_color = color;
     m_texture = texture;
+    m_uvRect = uvRect;
 
     // Make the m_body
     b2BodyDef bodyDef;
@@ -38,5 +44,5 @@ void Box::draw(Engine::SpriteBatch& spriteBatch) {
     destRect.z = m_dimensions.x;
     destRect.w = m_dimensions.y;
 
-    spriteBatch.draw(destRect, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), m_texture.id, 0.0f, m_color, m_body->GetAngle());
+    spriteBatch.draw(destRect, m_uvRect, m_texture.id, 0.0f, m_color, m_body->GetAngle());
 }

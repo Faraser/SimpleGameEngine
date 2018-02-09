@@ -75,7 +75,7 @@ void GameplayScreen::onEntry() {
     m_camera.setScale(32.0f);
 
     // Init player
-    m_player.init(m_world.get(), glm::vec2(0.0f, 15.0f), glm::vec2(1.0f, 2.0f), m_texture, Engine::ColorRGBA8(255, 255, 255, 255));
+    m_player.init(m_world.get(), glm::vec2(0.0f, 15.0f), glm::vec2(1.0f, 2.0f), Engine::ColorRGBA8(255, 255, 255, 255));
 }
 
 void GameplayScreen::onExit() {
