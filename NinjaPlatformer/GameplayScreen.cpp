@@ -23,7 +23,7 @@ void GameplayScreen::destroy() {
 }
 
 void GameplayScreen::onEntry() {
-    b2Vec2 gravity(0.0f, -9.81f);
+    b2Vec2 gravity(0.0f, -25.0f);
     m_world = std::make_unique<b2World>(gravity);
 
     // Make the ground
@@ -85,6 +85,7 @@ void GameplayScreen::onExit() {
 void GameplayScreen::update() {
     m_camera.update();
     checkInput();
+    m_player.update(m_game->inputManager);
 
     // Update the physics simulation
     m_world->Step(1.0f / 60.0f, 6, 2);

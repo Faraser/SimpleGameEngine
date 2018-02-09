@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Engine/SpriteBatch.h>
+#include <Engine/InputManager.h>
 #include "Box.h"
 
 class Player {
@@ -13,7 +14,7 @@ public:
 
     void draw(Engine::SpriteBatch & spriteBatch);
 
-    void update();
+    void update(Engine::InputManager& inputManager);
 
     const Box& getBox() const { return m_collisionBox; }
 
