@@ -2,24 +2,31 @@
 
 #include <Engine/SpriteBatch.h>
 #include <Engine/InputManager.h>
-#include "Box.h"
+#include <Engine/DebugRenderer.h>
+#include <Engine/GLTexture.h>
+#include "Capsule.h"
 
 class Player {
 public:
-    Player();
+    void init(b2World* world,
+              const glm::vec2& position,
+              const glm::vec2& drawDims,
+              const glm::vec2& collisionDim,
+              Engine::ColorRGBA8 color);
 
-    ~Player();
+    void draw(Engine::SpriteBatch& spriteBatch);
 
-    void init(b2World * world, const glm::vec2& position, const glm::vec2& dimensions, Engine::ColorRGBA8 color);
-
-    void draw(Engine::SpriteBatch & spriteBatch);
+    void drawDebug(Engine::DebugRenderer& debugRenderer);
 
     void update(Engine::InputManager& inputManager);
 
-    const Box& getBox() const { return m_collisionBox; }
+    const Capsule& getCapsule() const { return m_capsule; }
 
 private:
-    Box m_collisionBox;
+    glm::vec2 m_drawDims;
+    Engine::ColorRGBA8 m_color;
+    Engine::GLTexture m_texture;
+    Capsule m_capsule;
 };
 
 

@@ -3,24 +3,20 @@
 #include <Engine/ResourceManager.h>
 #include <iostream>
 
-Player::Player() {
-
-}
-
-Player::~Player() {
-
-}
 
 void Player::init(b2World* world,
                   const glm::vec2& position,
-                  const glm::vec2& dimensions,
+                  const glm::vec2& drawDims,
+                  const glm::vec2& collisionDim,
                   Engine::ColorRGBA8 color) {
-    Engine::GLTexture texture = Engine::ResourceManager::getTexture("Assets/blue_ninja.png");
-    m_collisionBox.init(world, position, dimensions, texture, color, true, glm::vec4(0.0f, 0.0f, 0.1f, 0.5f));
+    m_texture = Engine::ResourceManager::getTexture("Assets/blue_ninja.png");
+    m_color = color;
+    m_drawDims = drawDims;
+    m_capsule.init(world, position, collisionDim, 1.0f, 0.1f, true);
 }
 
 void Player::update(Engine::InputManager& inputManager) {
-    b2Body* body = m_collisionBox.getBody();
+    b2Body* body = m_capsule.getBody();
 
     if (inputManager.isKeyDown(SDLK_a)) {
         body->ApplyForceToCenter(b2Vec2(-100.0, 0.0), true);
@@ -47,7 +43,7 @@ void Player::update(Engine::InputManager& inputManager) {
             // Check if the points are below
             bool below = false;
             for (int i = 0; i < b2_maxManifoldPoints; i++) {
-                if (manifold.points[i].y < body->GetPosition().y - m_collisionBox.getDimensions().y / 2.0f + 0.01f) {
+                if (manifold.points[i].y < body->GetPosition().y - m_capsule.getDimensions().y / 2.0f + m_capsule.getDimensions().x / 2.0f + 0.01f) {
                     below = true;
                     break;
                 };
@@ -56,7 +52,7 @@ void Player::update(Engine::InputManager& inputManager) {
                 // We can jump
                 if (inputManager.isKeyPressed(SDLK_w)) {
                     std::cout << "PRESS JUMP" << std::endl;
-                    body->ApplyLinearImpulse(b2Vec2(0.0f, 21.0f), b2Vec2(0.0f, 0.0f), true);
+                    body->ApplyLinearImpulse(b2Vec2(0.0f, 30.0f), b2Vec2(0.0f, 0.0f), true);
                     break; // Jump only once
                 }
 
@@ -67,6 +63,18 @@ void Player::update(Engine::InputManager& inputManager) {
 }
 
 void Player::draw(Engine::SpriteBatch& spriteBatch) {
-    m_collisionBox.draw(spriteBatch);
+    glm::vec4 destRect;
+    b2Body* body = m_capsule.getBody();
+
+    destRect.x = body->GetPosition().x - m_drawDims.x / 2.0f;
+    destRect.y = body->GetPosition().y - m_capsule.getDimensions().y / 2.0f;
+    destRect.z = m_drawDims.x;
+    destRect.w = m_drawDims.y;
+
+    spriteBatch.draw(destRect, glm::vec4(0.0f, 0.0f, 0.1f, 0.5f), m_texture.id, 0.0f, m_color, body->GetAngle());
+}
+
+void Player::drawDebug(Engine::DebugRenderer& debugRenderer) {
+    m_capsule.drawDebug(debugRenderer);
 }
 
