@@ -23,10 +23,13 @@ void IMainGame::run() {
 
         inputManager.update();
         update();
-        draw();
 
-        m_fps = limiter.end();
-        m_window.swapBuffer();
+        if (m_isRunning) { // If still need drawing
+            draw();
+
+            m_fps = limiter.end();
+            m_window.swapBuffer();
+        }
     }
 }
 

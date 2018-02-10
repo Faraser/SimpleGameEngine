@@ -6,6 +6,7 @@
 #include <Engine/Camera2D.h>
 #include <Engine/GLTexture.h>
 #include <Engine/Window.h>
+#include <Engine/DebugRenderer.h>
 
 #include <Box2D/Box2D.h>
 #include <vector>
@@ -43,6 +44,9 @@ private:
     Engine::Camera2D m_camera;
     Engine::GLTexture m_texture;
     Engine::Window * m_window;
+    Engine::DebugRenderer m_debugRenderer;
+
+    bool m_renderDebug = true;
 
     Player m_player;
 

@@ -6,6 +6,7 @@
 #include <OpenGL/gl3.h>
 
 #include "EngineErrors.h"
+#include "IOManager.h"
 
 namespace Engine {
 GLSLprogram::GLSLprogram() :
@@ -20,8 +21,17 @@ GLSLprogram::~GLSLprogram() {
 
 }
 
-void
-GLSLprogram::compileShaders(const std::string& vertexShaderFilePath, const std::string& fragmentShaderFilePath) {
+void GLSLprogram::compileShaders(const std::string& vertexShaderFilePath, const std::string& fragmentShaderFilePath) {
+    std::string vertSource;
+    std::string fragSource;
+
+    IOManager::readFileToBuffer(vertexShaderFilePath, vertSource);
+    IOManager::readFileToBuffer(fragmentShaderFilePath, fragSource);
+
+    compileShadersFromSource(vertSource.c_str(), fragSource.c_str());
+};
+
+void GLSLprogram::compileShadersFromSource(const char* vertexSource, const char* fragmentSource) {
     _vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
     if (_vertexShaderID == 0) {
         fatalError("Vertex shader failed to be created");
@@ -32,31 +42,15 @@ GLSLprogram::compileShaders(const std::string& vertexShaderFilePath, const std::
         fatalError("Fragment shader failed to be created");
     }
 
-    compileShader(vertexShaderFilePath, _vertexShaderID);
-    compileShader(fragmentShaderFilePath, _fragmentShaderID);
+    compileShader(vertexSource, "Vertex shader", _vertexShaderID);
+    compileShader(fragmentSource, "Fragment shader", _fragmentShaderID);
 
 };
 
-void GLSLprogram::compileShader(const std::string& filePath, GLuint id) {
-    std::ifstream vertexFile(filePath);
-    if (vertexFile.fail()) {
-        perror((filePath).c_str());
-        fatalError("Failed to open " + (filePath));
-    }
+void GLSLprogram::compileShader(const char* source, const std::string& name, GLuint id) {
+    std::cout << "Shader code: " << source << std::endl;
 
-    std::string fileContents;
-    std::string line;
-
-    while (std::getline(vertexFile, line)) {
-        fileContents += line + "\n";
-    }
-
-    std::cout << "Shader code: " << fileContents << std::endl;
-
-    vertexFile.close();
-
-    const char* contentsPtr = fileContents.c_str();
-    glShaderSource(id, 1, &contentsPtr, nullptr);
+    glShaderSource(id, 1, &source, nullptr);
 
     glCompileShader(id);
 
@@ -73,7 +67,7 @@ void GLSLprogram::compileShader(const std::string& filePath, GLuint id) {
         glDeleteShader(id);
 
         std::printf("%s\n", &errorLog[0]);
-        fatalError("Shader " + filePath + "failed to compile");
+        fatalError("Shader " + name + "failed to compile");
     }
 }
 
@@ -137,5 +131,10 @@ GLint GLSLprogram::getUniformLocation(const std::string& uniformName) {
         fatalError("Uniform " + uniformName + " no found in shader");
     }
     return location;
-};
+}
+
+void GLSLprogram::dispose() {
+    if (_programID) glDeleteProgram(_programID);
+}
+
 }

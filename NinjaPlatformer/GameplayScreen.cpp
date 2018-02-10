@@ -76,10 +76,12 @@ void GameplayScreen::onEntry() {
 
     // Init player
     m_player.init(m_world.get(), glm::vec2(0.0f, 15.0f), glm::vec2(1.0f, 2.0f), Engine::ColorRGBA8(255, 255, 255, 255));
+
+    m_debugRenderer.init();
 }
 
 void GameplayScreen::onExit() {
-
+    m_debugRenderer.dispose();
 }
 
 void GameplayScreen::update() {
@@ -119,6 +121,33 @@ void GameplayScreen::draw() {
     m_spriteBatch.end();
     m_spriteBatch.renderBatch();
     m_textureProgram.unuse();
+
+    // Debug renderer
+    if (m_renderDebug) {
+        glm::vec4 destRect;
+        for (auto& b : m_boxes) {
+            destRect.x = b.getBody()->GetPosition().x - b.getDimensions().x / 2;
+            destRect.y = b.getBody()->GetPosition().y - b.getDimensions().y / 2;
+            destRect.z = b.getDimensions().x;
+            destRect.w = b.getDimensions().y;
+            m_debugRenderer.drawBox(destRect, Engine::ColorRGBA8(255, 255, 255, 255), b.getBody()->GetAngle());
+            // Circle
+//            m_debugRenderer.drawCircle(glm::vec2(b.getBody()->GetPosition().x, b.getBody()->GetPosition().y),
+//                                       Engine::ColorRGBA8(255, 255, 255, 255), b.getDimensions().x / 2.0f);
+        }
+
+        // Render player
+        auto b = m_player.getBox();
+        destRect.x = b.getBody()->GetPosition().x - b.getDimensions().x / 2;
+        destRect.y = b.getBody()->GetPosition().y - b.getDimensions().y / 2;
+        destRect.z = b.getDimensions().x;
+        destRect.w = b.getDimensions().y;
+        m_debugRenderer.drawBox(destRect, Engine::ColorRGBA8(255, 255, 255, 255), b.getBody()->GetAngle());
+
+
+        m_debugRenderer.end();
+        m_debugRenderer.render(projectionMatrix, 2.0f);
+    }
 }
 
 int GameplayScreen::getNextScreenIndex() const {
