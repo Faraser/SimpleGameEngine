@@ -12,7 +12,6 @@ set(SOURCE_FILES
         EngineErrors.cpp
         EngineErrors.h
         Vertex.h
-        IOManager.cpp
         IOManager.h
         picoPNG.h
         picoPNG.cpp
