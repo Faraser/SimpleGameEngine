@@ -46,7 +46,7 @@ void GameplayScreen::onEntry() {
     std::uniform_real_distribution<float> size(0.5f, 2.5f);
     std::uniform_int_distribution<int> color(0, 255);
 
-    const int NUM_BOXES = 50;
+    const int NUM_BOXES = 10;
 
     for (int i = 0; i < NUM_BOXES; i++) {
         Engine::ColorRGBA8 randColor(color(randGenerator), color(randGenerator), color(randGenerator), 255);

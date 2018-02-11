@@ -46,7 +46,11 @@ set(SOURCE_FILES
         IMainGame.cpp
         IMainGame.h
         ScreenList.cpp
-        ScreenList.h DebugRenderer.cpp DebugRenderer.h)
+        ScreenList.h
+        DebugRenderer.cpp
+        DebugRenderer.h
+        TileSheet.h
+        )
 
 add_library(Engine STATIC ${SOURCE_FILES})
 

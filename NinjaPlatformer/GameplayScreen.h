@@ -46,7 +46,7 @@ private:
     Engine::Window * m_window;
     Engine::DebugRenderer m_debugRenderer;
 
-    bool m_renderDebug = true;
+    bool m_renderDebug = false;
 
     Player m_player;
 
