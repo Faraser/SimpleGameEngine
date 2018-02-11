@@ -40,6 +40,7 @@ private:
     void checkInput();
 
     Engine::GLSLprogram m_textureProgram;
+    Engine::GLSLprogram m_lightProgram;
     Engine::SpriteBatch m_spriteBatch;
     Engine::Camera2D m_camera;
     Engine::GLTexture m_texture;

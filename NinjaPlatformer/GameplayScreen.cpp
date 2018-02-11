@@ -4,6 +4,7 @@
 #include <Engine/IMainGame.h>
 #include <OpenGL/gl3.h>
 #include <Engine/ResourceManager.h>
+#include "Light.h"
 #include <random>
 
 GameplayScreen::GameplayScreen(Engine::Window* window) : m_window(window) {
@@ -57,7 +58,6 @@ void GameplayScreen::onEntry() {
         m_boxes.push_back(newBox);
     }
 
-
     // Initialize spritebatch
     m_spriteBatch.init();
 
@@ -68,6 +68,14 @@ void GameplayScreen::onEntry() {
     m_textureProgram.addAttribute("vertexColor");
     m_textureProgram.addAttribute("vertexUV");
     m_textureProgram.linkShaders();
+
+    // Compile light shader
+    m_lightProgram.compileShaders("Shaders/lightShading.vert",
+                                  "Shaders/lightShading.frag");
+    m_lightProgram.addAttribute("vertexPosition");
+    m_lightProgram.addAttribute("vertexColor");
+    m_lightProgram.addAttribute("vertexUV");
+    m_lightProgram.linkShaders();
 
 
     // Init camera
@@ -138,6 +146,39 @@ void GameplayScreen::draw() {
         m_debugRenderer.end();
         m_debugRenderer.render(projectionMatrix, 2.0f);
     }
+
+    // Render some test lights
+    // TODO: don't hardcode this
+
+
+    Light playerLight;
+    playerLight.color = Engine::ColorRGBA8(255, 255, 255, 128);
+    playerLight.position = m_player.getPosition();
+    playerLight.size = 30.0f;
+
+    Light mouseLight;
+    mouseLight.color = Engine::ColorRGBA8(255, 0, 255, 150);
+    mouseLight.position = m_camera.convertScreenToWorld(m_game->inputManager.getMouseCoords());
+    mouseLight.size = 45.0f;
+
+
+    // Additive blending
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+
+    m_lightProgram.use();
+    GLint pLightUniform = m_lightProgram.getUniformLocation("P");
+    glUniformMatrix4fv(pLightUniform, 1, GL_FALSE, &projectionMatrix[0][0]);
+
+    m_spriteBatch.begin();
+    playerLight.draw(m_spriteBatch);
+    mouseLight.draw(m_spriteBatch);
+    m_spriteBatch.end();
+    m_spriteBatch.renderBatch();
+
+    m_lightProgram.unuse();
+
+    // Reset to regular alpha blending
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 int GameplayScreen::getNextScreenIndex() const {

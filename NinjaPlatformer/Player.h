@@ -6,7 +6,9 @@
 #include <Engine/TileSheet.h>
 #include "Capsule.h"
 
-enum class PlayerMoveState { STANDING, RUNNING, PUNCHING, IN_AIR };
+enum class PlayerMoveState {
+    STANDING, RUNNING, PUNCHING, IN_AIR
+};
 
 class Player {
 public:
@@ -23,6 +25,10 @@ public:
     void update(Engine::InputManager& inputManager);
 
     const Capsule& getCapsule() const { return m_capsule; }
+
+    glm::vec2 getPosition() const {
+        return glm::vec2(m_capsule.getBody()->GetPosition().x, m_capsule.getBody()->GetPosition().y);
+    }
 
 private:
     glm::vec2 m_drawDims;
