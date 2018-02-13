@@ -9,9 +9,11 @@ set(SOURCE_FILES main.cpp main.cpp App.cpp App.h GameplayScreen.cpp GameplayScre
 add_executable(NinjaPlatformer ${SOURCE_FILES})
 
 include_directories(../)
-include_directories(/usr/local/include/cegui-0)
 
 find_package(Box2D REQUIRED)
 include_directories(${BOX2D_INCLUDE_DIRS})
 
-target_link_libraries(NinjaPlatformer Engine ${BOX2D_LIBRARIES} -lCEGUIBase-0 -lCEGUIOpenGLRenderer-0)
+find_package(CEGUI REQUIRED)
+include_directories(${CEGUI_INCLUDE_DIRS})
+
+target_link_libraries(NinjaPlatformer Engine ${BOX2D_LIBRARIES} ${CEGUI_LIBRARIES} ${CEGUI_OpenGLRenderer_LIBRARIES})
