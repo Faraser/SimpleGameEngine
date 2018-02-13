@@ -55,18 +55,22 @@ set(SOURCE_FILES
 add_library(Engine STATIC ${SOURCE_FILES})
 
 include_directories(/usr/local/include)
-
 link_directories(/usr/local/lib)
 
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
 
+find_package(SDL2_ttf)
+include_directories(${SDL2_TTF_INCLUDE_DIR})
+
+find_package(SDL2_mixer)
+include_directories(${SDL2_MIXER_INCLUDE_DIR})
+
 find_package(OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR})
 
 target_link_libraries(Engine
-        ${SDL2_LIBRARIES}
         ${OPENGL_gl_LIBRARY}
-        -L/usr/local/Cellar/sdl2_ttf/2.0.14/lib -lSDL2_ttf
-        -L/usr/local/Cellar/sdl2_mixer/2.0.1_1/lib -lSDL2_mixer
-        )
+        ${SDL2_LIBRARIES}
+        ${SDL2_TTF_LIBRARIES}
+        ${SDL2_MIXER_LIBRARIES})

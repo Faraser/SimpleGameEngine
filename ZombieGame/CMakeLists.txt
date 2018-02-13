@@ -28,7 +28,4 @@ add_executable(ZombieGame ${SOURCE_FILES})
 
 include_directories(../)
 
-find_package(SDL2 REQUIRED)
-include_directories(${SDL2_INCLUDE_DIRS})
-
 target_link_libraries(ZombieGame Engine)
