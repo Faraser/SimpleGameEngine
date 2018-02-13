@@ -2,10 +2,12 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <Engine/IMainGame.h>
-#include <OpenGL/gl3.h>
 #include <Engine/ResourceManager.h>
 #include "Light.h"
 #include <random>
+#include <CEGUI/CEGUI.h>
+#include <OpenGL/gl3.h>
+#include <CEGUI/RendererModules/OpenGL/GL3Renderer.h>
 
 GameplayScreen::GameplayScreen(Engine::Window* window) : m_window(window) {
 
@@ -87,6 +89,9 @@ void GameplayScreen::onEntry() {
                   Engine::ColorRGBA8(255, 255, 255, 255));
 
     m_debugRenderer.init();
+
+    // TEMPORARY UI
+    CEGUI::OpenGL3Renderer & myRenderer = CEGUI::OpenGL3Renderer::bootstrapSystem();
 }
 
 void GameplayScreen::onExit() {
