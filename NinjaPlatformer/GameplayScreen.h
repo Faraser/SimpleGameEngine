@@ -7,6 +7,7 @@
 #include <Engine/GLTexture.h>
 #include <Engine/Window.h>
 #include <Engine/DebugRenderer.h>
+#include <Engine/GUI.h>
 
 #include <Box2D/Box2D.h>
 #include <vector>
@@ -46,6 +47,7 @@ private:
     Engine::GLTexture m_texture;
     Engine::Window * m_window;
     Engine::DebugRenderer m_debugRenderer;
+    Engine::GUI m_gui;
 
     bool m_renderDebug = false;
 

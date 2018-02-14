@@ -5,9 +5,7 @@
 #include <Engine/ResourceManager.h>
 #include "Light.h"
 #include <random>
-#include <CEGUI/CEGUI.h>
 #include <OpenGL/gl3.h>
-#include <CEGUI/RendererModules/OpenGL/GL3Renderer.h>
 
 GameplayScreen::GameplayScreen(Engine::Window* window) : m_window(window) {
 
@@ -90,8 +88,14 @@ void GameplayScreen::onEntry() {
 
     m_debugRenderer.init();
 
-    // TEMPORARY UI
-    CEGUI::OpenGL3Renderer & myRenderer = CEGUI::OpenGL3Renderer::bootstrapSystem();
+    // Init the UI
+    m_gui.init("GUI");
+    m_gui.loadScheme("AlfiskoSkin.scheme");
+    m_gui.setFont("DejaVuSans-10");
+    auto button = static_cast<CEGUI::PushButton*>(m_gui.createWidget("AlfiskoSkin/Button",
+                                                                     glm::vec4(0.5f, 0.5f, 0.1f, 0.05f),
+                                                                     glm::vec4(0.0f), "TestButton"));
+    button->setText("Hello World");
 }
 
 void GameplayScreen::onExit() {
@@ -184,6 +188,9 @@ void GameplayScreen::draw() {
 
     // Reset to regular alpha blending
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+    m_gui.draw();
+    glEnable(GL_BLEND);
 }
 
 int GameplayScreen::getNextScreenIndex() const {

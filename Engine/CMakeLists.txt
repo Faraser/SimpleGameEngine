@@ -50,7 +50,7 @@ set(SOURCE_FILES
         DebugRenderer.cpp
         DebugRenderer.h
         TileSheet.h
-        )
+        GUI.cpp GUI.h)
 
 add_library(Engine STATIC ${SOURCE_FILES})
 
@@ -69,8 +69,13 @@ include_directories(${SDL2_MIXER_INCLUDE_DIR})
 find_package(OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR})
 
+find_package(CEGUI REQUIRED)
+include_directories(${CEGUI_INCLUDE_DIRS})
+
 target_link_libraries(Engine
         ${OPENGL_gl_LIBRARY}
         ${SDL2_LIBRARIES}
         ${SDL2_TTF_LIBRARIES}
-        ${SDL2_MIXER_LIBRARIES})
+        ${SDL2_MIXER_LIBRARIES}
+        ${CEGUI_LIBRARIES}
+        ${CEGUI_OpenGLRenderer_LIBRARIES})
