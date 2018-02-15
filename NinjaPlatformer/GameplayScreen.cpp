@@ -90,12 +90,18 @@ void GameplayScreen::onEntry() {
 
     // Init the UI
     m_gui.init("GUI");
-    m_gui.loadScheme("AlfiskoSkin.scheme");
+    m_gui.loadScheme("TaharezLook.scheme");
     m_gui.setFont("DejaVuSans-10");
-    auto button = static_cast<CEGUI::PushButton*>(m_gui.createWidget("AlfiskoSkin/Button",
+    auto button = static_cast<CEGUI::PushButton*>(m_gui.createWidget("TaharezLook/Button",
                                                                      glm::vec4(0.5f, 0.5f, 0.1f, 0.05f),
                                                                      glm::vec4(0.0f), "TestButton"));
     button->setText("Hello World");
+    m_gui.setMouseCursor("TaharezLook/MouseArrow");
+    m_gui.showMouseCursor();
+
+    auto comboBox = static_cast<CEGUI::Combobox*>(m_gui.createWidget("TaharezLook/Combobox",
+                                                                     glm::vec4(0.2f, 0.2f, 0.1f, 0.05f),
+                                                                     glm::vec4(0.0f), "TestCombobox"));
 }
 
 void GameplayScreen::onExit() {
@@ -159,7 +165,6 @@ void GameplayScreen::draw() {
     // Render some test lights
     // TODO: don't hardcode this
 
-
     Light playerLight;
     playerLight.color = Engine::ColorRGBA8(255, 255, 255, 128);
     playerLight.position = m_player.getPosition();
@@ -205,6 +210,7 @@ void GameplayScreen::checkInput() {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
         m_game->onSDLEvent(event);
+        m_gui.onSDLEvent(event);
     }
 
 }

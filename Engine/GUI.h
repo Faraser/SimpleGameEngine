@@ -4,6 +4,7 @@
 #include <CEGUI/RendererModules/OpenGL/GL3Renderer.h>
 #include <string>
 #include <glm/glm.hpp>
+#include <SDL2/SDL_events.h>
 
 namespace Engine {
 class GUI {
@@ -13,10 +14,17 @@ public:
     void destroy();
 
     void draw();
+    void update();
 
     void loadScheme(const std::string& schemeFile);
 
     void setFont(const std::string& fontFile);
+
+    void setMouseCursor(const std::string& imageFile);
+    void showMouseCursor();
+    void hideMouseCursor();
+
+    void onSDLEvent(SDL_Event & event);
 
     static void setWidgetDestRect(CEGUI::Window * widget, const glm::vec4& destRectPerc, const glm::vec4& destRectPix);
 
@@ -31,6 +39,7 @@ private:
     static CEGUI::OpenGL3Renderer* m_renderer;
     CEGUI::GUIContext* m_context = nullptr;
     CEGUI::Window* m_root = nullptr;
+    unsigned int m_lastTime;
 };
 }
 
