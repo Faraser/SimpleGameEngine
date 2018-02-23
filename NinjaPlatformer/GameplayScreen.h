@@ -18,7 +18,7 @@
 class GameplayScreen : public Engine::IGameScreen {
 
 public:
-    GameplayScreen(Engine::Window * window);
+    GameplayScreen(Engine::Window* window);
 
     ~GameplayScreen();
 
@@ -37,15 +37,20 @@ public:
     int getNextScreenIndex() const override;
 
     int getPreviousScreenIndex() const override;
+
 private:
     void checkInput();
+
+    void initUI();
+
+    bool onExitClicked(const CEGUI::EventArgs& e);
 
     Engine::GLSLprogram m_textureProgram;
     Engine::GLSLprogram m_lightProgram;
     Engine::SpriteBatch m_spriteBatch;
     Engine::Camera2D m_camera;
     Engine::GLTexture m_texture;
-    Engine::Window * m_window;
+    Engine::Window* m_window;
     Engine::DebugRenderer m_debugRenderer;
     Engine::GUI m_gui;
 

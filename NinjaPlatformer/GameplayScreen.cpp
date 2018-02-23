@@ -6,9 +6,10 @@
 #include "Light.h"
 #include <random>
 #include <OpenGL/gl3.h>
+#include "ScreenIndices.h"
 
 GameplayScreen::GameplayScreen(Engine::Window* window) : m_window(window) {
-
+   m_screenIndex = SCREEN_INDEX_GAMEPLAY;
 }
 
 GameplayScreen::~GameplayScreen() {
@@ -87,21 +88,7 @@ void GameplayScreen::onEntry() {
                   Engine::ColorRGBA8(255, 255, 255, 255));
 
     m_debugRenderer.init();
-
-    // Init the UI
-    m_gui.init("GUI");
-    m_gui.loadScheme("TaharezLook.scheme");
-    m_gui.setFont("DejaVuSans-10");
-    auto button = static_cast<CEGUI::PushButton*>(m_gui.createWidget("TaharezLook/Button",
-                                                                     glm::vec4(0.5f, 0.5f, 0.1f, 0.05f),
-                                                                     glm::vec4(0.0f), "TestButton"));
-    button->setText("Hello World");
-    m_gui.setMouseCursor("TaharezLook/MouseArrow");
-    m_gui.showMouseCursor();
-
-    auto comboBox = static_cast<CEGUI::Combobox*>(m_gui.createWidget("TaharezLook/Combobox",
-                                                                     glm::vec4(0.2f, 0.2f, 0.1f, 0.05f),
-                                                                     glm::vec4(0.0f), "TestCombobox"));
+    initUI();
 }
 
 void GameplayScreen::onExit() {
@@ -199,11 +186,11 @@ void GameplayScreen::draw() {
 }
 
 int GameplayScreen::getNextScreenIndex() const {
-    return -1;
+    return SCREEN_INDEX_NO_SCREEN;
 }
 
 int GameplayScreen::getPreviousScreenIndex() const {
-    return -1;
+    return SCREEN_INDEX_MAINMENU;
 }
 
 void GameplayScreen::checkInput() {
@@ -213,5 +200,26 @@ void GameplayScreen::checkInput() {
         m_gui.onSDLEvent(event);
     }
 
+}
+
+void GameplayScreen::initUI() {
+    m_gui.init("GUI");
+    m_gui.loadScheme("TaharezLook.scheme");
+    m_gui.setFont("DejaVuSans-10");
+    auto button = static_cast<CEGUI::PushButton*>(m_gui.createWidget("TaharezLook/Button",
+                                                                     glm::vec4(0.1f, 0.1f, 0.1f, 0.05f),
+                                                                     glm::vec4(0.0f), "TestButton"));
+    button->subscribeEvent(CEGUI::PushButton::EventClicked,
+                           CEGUI::Event::Subscriber(&GameplayScreen::onExitClicked, this));
+
+    button->setText("Exit Game!");
+    m_gui.setMouseCursor("TaharezLook/MouseArrow");
+    m_gui.showMouseCursor();
+}
+
+bool GameplayScreen::onExitClicked(const CEGUI::EventArgs& e) {
+    std::cout << "Exit game!" << std::endl;
+    m_currentState = Engine::ScreenState::EXIT_APPLICATION;
+    return true;
 }
 
