@@ -41,7 +41,7 @@ void MainMenuScreen::draw() {
 }
 
 int MainMenuScreen::getNextScreenIndex() const {
-    return SCREEN_INDEX_GAMEPLAY;
+    return m_nextScreenIndex;
 }
 
 int MainMenuScreen::getPreviousScreenIndex() const {
@@ -52,6 +52,11 @@ void MainMenuScreen::checkInput() {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
         m_gui.onSDLEvent(event);
+        switch(event.type) {
+            case SDL_QUIT:
+                onExitButtonClicked(CEGUI::EventArgs());
+                break;
+        }
     }
 }
 
@@ -59,13 +64,6 @@ void MainMenuScreen::initUI() {
     m_gui.init("GUI");
     m_gui.loadScheme("TaharezLook.scheme");
     m_gui.setFont("DejaVuSans-10");
-    auto exitButton = static_cast<CEGUI::PushButton*>(m_gui.createWidget("TaharezLook/Button",
-                                                                         glm::vec4(0.45f, 0.55f, 0.1f, 0.05f),
-                                                                         glm::vec4(0.0f), "ExitButton"));
-    exitButton->subscribeEvent(CEGUI::PushButton::EventClicked,
-                               CEGUI::Event::Subscriber(&MainMenuScreen::onExitButtonClicked, this));
-
-    exitButton->setText("Exit Game");
 
     auto newGameButton = static_cast<CEGUI::PushButton*>(m_gui.createWidget("TaharezLook/Button",
                                                                             glm::vec4(0.45f, 0.45f, 0.1f, 0.05f),
@@ -74,17 +72,39 @@ void MainMenuScreen::initUI() {
                                   CEGUI::Event::Subscriber(&MainMenuScreen::onNewGameButtonClicked, this));
     newGameButton->setText("New Game");
 
+    auto editorButton = static_cast<CEGUI::PushButton*>(m_gui.createWidget("TaharezLook/Button",
+                                                                           glm::vec4(0.45f, 0.50f, 0.1f, 0.05f),
+                                                                           glm::vec4(0.0f), "EditorButton"));
+    editorButton->subscribeEvent(CEGUI::PushButton::EventClicked,
+                                  CEGUI::Event::Subscriber(&MainMenuScreen::onEditorButtonClicked, this));
+    editorButton->setText("Level Editor");
+
+    auto exitButton = static_cast<CEGUI::PushButton*>(m_gui.createWidget("TaharezLook/Button",
+                                                                         glm::vec4(0.45f, 0.55f, 0.1f, 0.05f),
+                                                                         glm::vec4(0.0f), "ExitButton"));
+    exitButton->subscribeEvent(CEGUI::PushButton::EventClicked,
+                               CEGUI::Event::Subscriber(&MainMenuScreen::onExitButtonClicked, this));
+
+    exitButton->setText("Exit Game");
+
     m_gui.setMouseCursor("TaharezLook/MouseArrow");
     m_gui.showMouseCursor();
 }
 
 bool MainMenuScreen::onExitButtonClicked(const CEGUI::EventArgs& e) {
     m_currentState = Engine::ScreenState::EXIT_APPLICATION;
-    return false;
+    return true;
 }
 
 bool MainMenuScreen::onNewGameButtonClicked(const CEGUI::EventArgs& e) {
+    m_nextScreenIndex = SCREEN_INDEX_GAMEPLAY;
     m_currentState = Engine::ScreenState::CHANGE_NEXT;
-    return false;
+    return true;
+}
+
+bool MainMenuScreen::onEditorButtonClicked(const CEGUI::EventArgs& e) {
+    m_nextScreenIndex = SCREEN_INDEX_EDITOR;
+    m_currentState = Engine::ScreenState::CHANGE_NEXT;
+    return true;
 }
 
